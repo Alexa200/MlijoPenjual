@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "669127537700",
+    "firebase_url": "https://mlijo-5640f.firebaseio.com",
+    "project_id": "mlijo-5640f",
+    "storage_bucket": "mlijo-5640f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669127537700:android:1c79edfae09a24fd",
+        "android_client_info": {
+          "package_name": "com.example.aryaym.mlijopenjual"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669127537700-59f7ccmp8eekpr7ok78a16lb24mvvdsl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdGRWN5J1J87yJxa3k38EQdVkWHabsrdI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
