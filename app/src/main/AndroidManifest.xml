@@ -52,10 +52,15 @@
 
         <activity android:name=".KelolaProduk.UbahProdukActivity"></activity>
         <activity android:name=".Profil.PengaturanProfilActivity" />
-        <activity android:name=".Profil.KelolaAlamatActivity" />
+        <activity android:name=".Profil.KelolaLokasiActivity" />
         <activity android:name=".Profil.TambahAlamatActivity"></activity>
         <activity android:name=".KelolaPenjualan.ListTransaksiActivity"></activity>
         <activity android:name=".KelolaPenjualan.DetailTransaksiActivity"></activity>
+
+        <service
+            android:name=".Profil.Service.LocationUpdatesService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

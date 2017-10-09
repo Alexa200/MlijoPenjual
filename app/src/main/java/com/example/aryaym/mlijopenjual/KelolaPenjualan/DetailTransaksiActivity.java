@@ -140,6 +140,14 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
             inputBiayaKirim.setVisibility(View.GONE);
             txtBiayaKirim.setVisibility(View.VISIBLE);
             penerimaLayout.setVisibility(View.GONE);
+        } else if (transaksiModel.getStatusTransaksi() == 7) {
+            statusTransaksi.setText(Constants.DITERIMA);
+            sembunyikanTombol();
+            inputBiayaKirim.setVisibility(View.GONE);
+            txtBiayaKirim.setVisibility(View.VISIBLE);
+            penerimaLayout.setVisibility(View.VISIBLE);
+            inputPenerimaPesanan.setVisibility(View.GONE);
+            txtPenerimaPesanan.setVisibility(View.VISIBLE);
         }
     }
 

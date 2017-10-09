@@ -63,7 +63,7 @@ public class PengaturanFragment extends Fragment {
         alamatLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PengaturanFragment.this.getActivity(), KelolaAlamatActivity.class);
+                Intent intent = new Intent(PengaturanFragment.this.getActivity(), KelolaLokasiActivity.class);
                 startActivity(intent);
             }
         });

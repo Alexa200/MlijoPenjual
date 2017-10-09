@@ -8,6 +8,7 @@ public class Constants {
 
     public static final String KONSUMEN = "data_konsumen";
     public static final String PENJUAL = "data_penjual";
+    public static final String GEOFIRE = "geofire";
     //User
     public static final String NAMA = "nama";
     public static final String KTP = "noKTP";
@@ -16,6 +17,7 @@ public class Constants {
     public static final String UID = "uid";
     public static final String DEVICE_TOKEN = "deviceToken";
     public static final String ALAMAT_USER = "alamatUser";
+    public static final String STATUS_LOKASI = "statusLokasi";
     //Produk
     public static final String TITLE = "title";
     public static final String IMAGES = "images";
@@ -54,4 +56,5 @@ public class Constants {
     public static final String TERKIRIM = "pesanan telah dikirim";
     public static final String DITOLAK = "maaf, pesanan ditolak penjual";
     public static final String DIBATALKAN = "maaf, pembelian dibatalkan pembeli";
+    public static final String DITERIMA = "pesanan telah diterima pembeli";
 }
