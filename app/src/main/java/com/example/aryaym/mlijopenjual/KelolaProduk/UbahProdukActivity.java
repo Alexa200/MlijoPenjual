@@ -140,7 +140,7 @@ public class UbahProdukActivity extends BaseActivity {
 
     private void loadData() {
         try {
-            mDatabase.child(Constants.PRODUK).child(produkModel.getKategoriProduk()).child(produkModel.getIdProduk()).addValueEventListener(new ValueEventListener() {
+            mDatabase.child(Constants.PRODUK_REGULER).child(produkModel.getKategoriProduk()).child(produkModel.getIdProduk()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot != null) {

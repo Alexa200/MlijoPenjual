@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.aryaym.mlijopenjual.Base.ImageLoader;
 import com.example.aryaym.mlijopenjual.KelolaProduk.ProdukModel;
-import com.example.aryaym.mlijopenjual.Profil.User;
+import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.example.aryaym.mlijopenjual.Utils.DateFormatter;
@@ -74,15 +74,18 @@ public class ListTransaksiAdapter extends RecyclerView.Adapter<ListTransaksiView
         }else if(transaksiModel.getStatusTransaksi() ==6){
             holder.txtStatusTransaksi.setTextColor(Color.RED);
             holder.txtStatusTransaksi.setText(Constants.DIBATALKAN);
+        }else if (transaksiModel.getStatusTransaksi() == 7) {
+            holder.txtStatusTransaksi.setTextColor(Color.GREEN);
+            holder.txtStatusTransaksi.setText(Constants.DITERIMA);
         }
 
 
         mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.ALAMAT_USER).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    holder.txtAlamatKonsumen.setText(user.getAlamat());
+                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
+                if (penjualModel != null) {
+                    holder.txtAlamatKonsumen.setText(penjualModel.getAlamat());
                 }
             }
 
@@ -91,16 +94,20 @@ public class ListTransaksiAdapter extends RecyclerView.Adapter<ListTransaksiView
 
             }
         });
-        mDatabase.child(Constants.PRODUK).child(transaksiModel.getIdKategori()).child(transaksiModel.getIdProduk())
+        mDatabase.child(transaksiModel.getTipeTransaksi()).child(transaksiModel.getIdKategori()).child(transaksiModel.getIdProduk())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if (dataSnapshot != null){
                             final ProdukModel produkModel = dataSnapshot.getValue(ProdukModel.class);
                             if (produkModel != null){
-                                holder.txtNamaProduk.setText(produkModel.getNamaProduk());
-                               // holder.txtTanggalTransaksi.setText(transaksiModel.get);
-                                ImageLoader.getInstance().loadImageAvatar(activity, produkModel.getImgProduk().get(0), holder.iconProduk);
+                                try {
+                                    holder.txtNamaProduk.setText(produkModel.getNamaProduk());
+                                    // holder.txtTanggalTransaksi.setText(transaksiModel.get);
+                                    ImageLoader.getInstance().loadImageAvatar(activity, produkModel.getImgProduk().get(0), holder.iconProduk);
+                                }catch (Exception e){
+
+                                }
                             }
                         }
                     }

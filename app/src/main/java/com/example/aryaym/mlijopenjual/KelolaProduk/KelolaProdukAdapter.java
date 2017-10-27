@@ -28,7 +28,6 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
     private List<PostRef> postRefs;
     private Activity activity;
     private DatabaseReference mDatabase;
- //   private KelolaProdukFragment kelolaProduk;
 
     public KelolaProdukAdapter(List<PostRef> postRefs, Activity activity){
         this.postRefs = postRefs;
@@ -45,7 +44,7 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
     @Override
     public void onBindViewHolder(final KelolaProdukViewHolder holder, int position) {
         final PostRef postRef = postRefs.get(position);
-        mDatabase.child(Constants.PRODUK).child((postRef.getIdKategori())).child((postRef.getIdProduk()))
+        mDatabase.child(Constants.PRODUK_REGULER).child((postRef.getIdKategori())).child((postRef.getIdProduk()))
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,7 +78,7 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
                                                                 .setPositiveButton(R.string.lbl_ya, new DialogInterface.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(DialogInterface dialog, int which) {
-                                                                        mDatabase.child(Constants.PRODUK).child(postRef.getIdKategori()).child(postRef.getIdProduk()).removeValue();
+                                                                        mDatabase.child(Constants.PRODUK_REGULER).child(postRef.getIdKategori()).child(postRef.getIdProduk()).removeValue();
                                                                         mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PRODUK).child(postRef.getIdProduk()).removeValue();
                                                                     }
                                                                 })

@@ -20,8 +20,8 @@ public class PengaturanFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.set_profil_layout)
     LinearLayout profilLayout;
-    @BindView(R.id.set_alamat_layout)
-    LinearLayout alamatLayout;
+    @BindView(R.id.set_lokasi_layout)
+    LinearLayout lokasiLayout;
     Unbinder unbinder;
 
     // TODO: Rename and change types of parameters
@@ -60,7 +60,7 @@ public class PengaturanFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        alamatLayout.setOnClickListener(new View.OnClickListener() {
+        lokasiLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PengaturanFragment.this.getActivity(), KelolaLokasiActivity.class);

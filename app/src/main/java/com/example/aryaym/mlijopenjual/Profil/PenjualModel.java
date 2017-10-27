@@ -2,13 +2,14 @@ package com.example.aryaym.mlijopenjual.Profil;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by AryaYM on 09/09/2017.
  */
 
-public class User implements Serializable{
-    private String imgAvatar;
+public class PenjualModel implements Serializable{
+    private String avatar;
     private String email;
     private String nama;
     private String noKTP;
@@ -18,17 +19,28 @@ public class User implements Serializable{
     private String alamat;
     private String judulAlamat;
     private String alamatId;
+    private boolean statusLokasi;
     private String namaPenerima;
+    private Map<String, Object> infoKategori;
+    private Map<String, Object> infoLokasi;
     private HashMap<String, Object> alamatUser;
 
-    public User(){}
+    public PenjualModel(){}
 
-    public String getImgAvatar() {
-        return imgAvatar;
+    public Map<String, Object> getInfoLokasi() {
+        return infoLokasi;
     }
 
-    public void setImgAvatar(String imgAvatar) {
-        this.imgAvatar = imgAvatar;
+    public Map<String, Object> getInfoKategori() {
+        return infoKategori;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getEmail() {
@@ -113,5 +125,9 @@ public class User implements Serializable{
 
     public String getNamaPenerima() {
         return namaPenerima;
+    }
+
+    public boolean isStatusLokasi() {
+        return statusLokasi;
     }
 }

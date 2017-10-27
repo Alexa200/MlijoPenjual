@@ -244,12 +244,12 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
 //                    @Override
 //                    public void onDataChange(DataSnapshot dataSnapshot) {
 //                        // Get user value
-//                        User user = dataSnapshot.getValue(User.class);
+//                        PenjualModel user = dataSnapshot.getValue(PenjualModel.class);
 //
 //                        // [START_EXCLUDE]
 //                        if (user == null) {
-//                            // User is null, error out
-//                            Log.e(TAG, "User " + userId + " is unexpectedly null");
+//                            // PenjualModel is null, error out
+//                            Log.e(TAG, "PenjualModel " + userId + " is unexpectedly null");
 //                            Toast.makeText(TambahProdukActivity.this,
 //                                    "Error: could not fetch user.",
 //                                    Toast.LENGTH_SHORT).show();
@@ -335,7 +335,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
 //    }
 
     private void submitPost(){
-        final ProdukModel produkModel = new ProdukModel();
+      //  final ProdukModel produkModel = new ProdukModel();
         namaProduk = inputNamaProduk.getText().toString();
         hargaProduk = Double.parseDouble(inputHargaProduk.getText().toString());
         satuanProduk = inputNominalSatuan.getText().toString() ;
@@ -403,7 +403,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void buatProdukBaru(String namaProduk, Double hargaProduk, String satuanProduk, String deskripsiProduk){
-        String pushId = mDatabase.child(Constants.PRODUK).child(kategoriProduk).push().getKey();
+        String pushId = mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).push().getKey();
         final String idProduk = pushId;
         HashMap<String, Object> dataProduk = new HashMap<>();
         dataProduk.put(Constants.ID_PENJUAL, getUid());
@@ -415,7 +415,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
         dataProduk.put(Constants.ID_PRODUK,idProduk);
         dataProduk.put(Constants.IMAGES, produk.getImgProduk());
         dataProduk.put(Constants.DESKRIPSI, deskripsiProduk);
-        mDatabase.child(Constants.PRODUK).child(kategoriProduk).child(idProduk).setValue(dataProduk);
+        mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).setValue(dataProduk);
         showProgessDialog();
 
         UploadPhotoThreadListener uploadPhotoThreadListener = new UploadPhotoThreadListener() {
@@ -423,7 +423,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
             public void onUploadPhotoSuccess(ArrayList<String> photoUrls) {
                 Map<String, Object> updateImage = new HashMap<>();
                 updateImage.put(Constants.IMAGES, photoUrls);
-                mDatabase.child(Constants.PRODUK).child(kategoriProduk).child(idProduk).updateChildren(updateImage);
+                mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).updateChildren(updateImage);
 
                 showProgessDialog();
                 HashMap<String, Object> data = new HashMap<>();

@@ -1,6 +1,11 @@
 <resources>
     <!-- Apps -->
     <string name="notification">Pemberitahuan</string>
+    <string name="chooseImageOrTakePicture">Choose a photo from the gallery or take a photo</string>
+    <string name="chooseImage">Select photo</string>
+    <string name="takePicture">Take a photo</string>
+    <string name="msg_simpan_img_error">simpan gambar error</string>
+    <string name="msg_gambar_tersimpan">gambar tersimpan</string>
         <!-- Title -->
     <string name="app_name">Mlijo Penjual</string>
     <string name="title_activity_dashboard">Dashboard</string>
@@ -27,6 +32,7 @@
     <string name="msg_retry">Coba lagi</string>
     <string name="msg_noInternet">Anda tidak tersambung internet</string>
     <string name="msg_loading">loading...</string>
+    <string name="msg_error">Error</string>
     <string name="msg_confirmLogOut">Apakah anda yakin akan logout?</string>
     <string name="msg_keluarAplikasi">Apakah anda ingin keluar aplikasi?</string>
     <string name="msg_tidak_boleh_kosong">Anda harus mengisi Form yang tersedia !</string>
@@ -38,9 +44,19 @@
     <string name="launch_activity">Launch activity</string>
     <string name="remove_location_updates">Remove location updates</string>
     <string name="location_updated">Location Updated: %1$s</string>
+        <!-- Data -->
+    <string-array name="hari">
+        <item>Minggu</item>
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Kamis</item>
+        <item>Jumat</item>
+        <item>Sabtu</item>
+    </string-array>
     <!-- Apps -->
 
-    <!-- User -->
+    <!-- PenjualModel -->
     <string name="action_sign_in_short">Register</string>
         <!-- Hint -->
     <string name="hint_email">Email</string>
@@ -50,6 +66,10 @@
     <string name="hint_noTelp">Nomor Telepon</string>
     <string name="hint_alamat">Alamat Lengkap</string>
     <string name="hint_judul_alamat">Isi dengan alamat sebagai(Contoh : Alamat Rumah)</string>
+    <string name="hint_hari_mulai">Mulai</string>
+    <string name="hint_hari_selesai">Selesai</string>
+    <string name="hint_jam_mulai">Buka mulai</string>
+    <string name="hint_jam_selesai">Selesai</string>
         <!-- Button -->
     <string name="btn_login">LOGIN</string>
     <string name="btn_forgot_password">Lupa Sandi Anda?</string>
@@ -59,7 +79,7 @@
         <!-- Label -->
     <string name="lbl_forgot_password">Lupa Sandi?</string>
     <string name="lbl_kelola_profil">Kelola Profil</string>
-    <string name="lbl_atur_alamat">Pengaturan Alamat</string>
+    <string name="lbl_atur_lokasi">Pengaturan Lokasi</string>
         <!-- Pesan -->
     <string name="msg_email_kosong">Mohon isi email anda</string>
     <string name="msg_minimum_password">Sandi terlalu pendek, input minimal 6 karakter</string>
@@ -77,7 +97,65 @@
         <item>Kecamatan Kedungkandang</item>
         <item>Kecamatan Sukun</item>
     </string-array>
-    <!-- User -->
+    <string-array name="arrKelurahan">
+        <item>Klojen</item>
+        <item>Rampal Celaket</item>
+        <item>Oro Oro Dowo</item>
+        <item>Samaan</item>
+        <item>Penanggungan</item>
+        <item>Gadingasri</item>
+        <item>Bareng</item>
+        <item>Kasin</item>
+        <item>Sukoharjo</item>
+        <item>Kauman</item>
+        <item>Kiduldalem</item>
+        <item>Kesatrian</item>
+        <item>Polehan</item>
+        <item>Purwantoro</item>
+        <item>Bunulrejo</item>
+        <item>PandanWangi</item>
+        <item>Blimbing</item>
+        <item>Purwodadi</item>
+        <item>Arjosari</item>
+        <item>Balearjosari</item>
+        <item>Jodipan</item>
+        <item>Polowijen</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+        <item>q</item>
+    </string-array>
+    <!-- PenjualModel -->
 
     <!-- Dashboard -->
         <!-- Hint -->

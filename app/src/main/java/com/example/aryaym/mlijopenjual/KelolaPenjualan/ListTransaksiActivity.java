@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 
 public class ListTransaksiActivity extends BaseActivity {
 
-    String title, tipeTransaksi;
+    String title, jenisTransaksi;
     @BindView(R.id.recycler_list_transaksi)
     RecyclerView mRecycler;
     @BindView(R.id.progress_bar)
@@ -42,7 +42,7 @@ public class ListTransaksiActivity extends BaseActivity {
         setContentView(R.layout.activity_list_transaksi);
         ButterKnife.bind(this);
         title = getIntent().getStringExtra(Constants.TITLE);
-        tipeTransaksi = getIntent().getStringExtra(Constants.TRANSAKSI);
+        jenisTransaksi = getIntent().getStringExtra(Constants.TRANSAKSI);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         listTransaksiAdapter = new ListTransaksiAdapter(this, transaksiList);
@@ -81,7 +81,7 @@ public class ListTransaksiActivity extends BaseActivity {
 //    }
 
     private Query getData(){
-        Query query = mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(tipeTransaksi);
+        Query query = mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(jenisTransaksi);
         return query;
     }
 

@@ -1,9 +1,11 @@
 package com.example.aryaym.mlijopenjual.Profil;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -20,15 +22,12 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.BuildConfig;
 import com.example.aryaym.mlijopenjual.Profil.Service.LocationUpdatesService;
@@ -37,33 +36,41 @@ import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+public class KelolaLokasiActivity extends BaseActivity
+        implements View.OnClickListener, RadialTimePickerDialogFragment.OnTimeSetListener{
 
-public class KelolaLokasiActivity extends BaseActivity{
 
-    @BindView(R.id.btn_edit)
-    TextView btnEdit;
-    @BindView(R.id.spn_kecamatan)
-    Spinner spnKecamatan;
-    @BindView(R.id.input_waktu_layout)
-    LinearLayout inputWaktuLayout;
-    @BindView(R.id.txt_waktu_layout)
-    LinearLayout txtWaktuLayout;
+
     @BindView(R.id.switch_lokasi)
     SwitchCompat switchLokasi;
     @BindView(R.id.txt_status)
     TextView txtStatus;
     @BindView(R.id.btn_submit_lokasi)
-    Button btnSubmitLokasi;
-
-    private ArrayAdapter<String> spinnerKecamatanAdapter;
+    Button btnSubmit;
+    @BindView(R.id.txt_kecamatan)
+    TextView txtKecamatan;
+    @BindView(R.id.hari_mulai)
+    TextView txtHariMulai;
+    @BindView(R.id.hari_selesai)
+    TextView txtHariSelesai;
+    @BindView(R.id.jam_mulai)
+    TextView txtJamMulai;
+    @BindView(R.id.jam_selesai)
+    TextView txtJamSelesai;
 
     DatabaseReference mDatabase, mDatabaseGeofire;
     GeoFire geoFire;
@@ -94,6 +101,11 @@ public class KelolaLokasiActivity extends BaseActivity{
     };
 
     double lat, lon;
+    private int mSelectedDay;
+    private ArrayList<Integer> mSelectKecamatan;
+    private static final String FRAG_TAG_TIME_PICKER_OPEN = "timePickerDialogFragmentOpen";
+    private static final String FRAG_TAG_TIME_PICKER_CLOSE = "timePickerDialogFragmentClose";
+    private long timeOpenInMinute = 0, timeCloseInMinute = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,25 +123,30 @@ public class KelolaLokasiActivity extends BaseActivity{
             }
         }
         myReceiver = new MyReceiver();
-        //disableInput();
+        ambilData();
 
-
-        enableInput();
+        txtKecamatan.setOnClickListener(this);
+        txtHariMulai.setOnClickListener(this);
+        txtHariSelesai.setOnClickListener(this);
+        txtJamMulai.setOnClickListener(this);
+        txtJamSelesai.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
 
         switchLokasi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (! isChecked){
+                if (!isChecked) {
                     mService.removeLocationUpdates();
                     disableStatusLokasiPenjual();
-                }else if (isChecked){
+                    txtStatus.setText("non-Aktif");
+                } else if (isChecked) {
                     if (!checkPermissions()) {
                         requestPermissions();
                     } else {
                         mService.requestLocationUpdates();
                         enableStatusLokasiPenjual(lat, lon);
                     }
-
+                    txtStatus.setText("Aktif");
                 }
             }
         });
@@ -137,74 +154,223 @@ public class KelolaLokasiActivity extends BaseActivity{
                 Context.BIND_AUTO_CREATE);
     }
 
-    private void disableInput(){
-        spnKecamatan.setEnabled(false);
-        inputWaktuLayout.setVisibility(View.GONE);
-        btnSubmitLokasi.setVisibility(View.GONE);
-    }
-    private void enableInput(){
-        handleSpinner();
-        spnKecamatan.setEnabled(true);
-        txtWaktuLayout.setVisibility(View.GONE);
-        btnSubmitLokasi.setVisibility(View.VISIBLE);
+    private void ambilData(){
+        try {
+            mDatabase.child(Constants.PENJUAL).child(getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot != null) {
+                        PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
+                        if (penjualModel != null) {
+                            try {
+                                txtKecamatan.setText(penjualModel.getInfoLokasi().get(Constants.KECAMATAN).toString());
+                                txtHariMulai.setText(penjualModel.getInfoLokasi().get(Constants.HARI_MULAI).toString());
+                                txtHariSelesai.setText(penjualModel.getInfoLokasi().get(Constants.HARI_SELESAI).toString());
+                                txtJamMulai.setText(penjualModel.getInfoLokasi().get(Constants.JAM_MULAI).toString());
+                                txtJamSelesai.setText(penjualModel.getInfoLokasi().get(Constants.JAM_SELESAI).toString());
+                                if (penjualModel.isStatusLokasi()){
+                                    //switchLokasi.setChecked(true);
+                                    txtStatus.setText("Aktif");
+                                }else {
+                                    //switchLokasi.setChecked(false);
+                                    txtStatus.setText("non-Aktif");
+                                }
+                            }catch (Exception e){
+
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
-    private void handleSpinner() {
-        spinnerKecamatanAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.arrKecamatan));
-        spinnerKecamatanAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+    private void submitData(Map<String, Object> infoLokasi){
+        Map<String, Object> updateDataPenjual = new HashMap<>();
+        updateDataPenjual.put(Constants.INFO_LOKASI, infoLokasi);
+        mDatabase.child(Constants.PENJUAL).child(getUid()).updateChildren(updateDataPenjual);
+    }
 
-        spnKecamatan.setAdapter(spinnerKecamatanAdapter);
-        spnKecamatan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String itemKecamatan = parent.getItemAtPosition(position).toString();
-                // kecamatan = itemKecamatan;
+    private void perbaruiData(){
+        try {
+            String kecamatan = txtKecamatan.getText().toString();
+            String startDay = txtHariMulai.getText().toString();
+            String endDay = txtHariSelesai.getText().toString();
+            String startTime = txtJamMulai.getText().toString();
+            String endTime = txtJamSelesai.getText().toString();
+            //getData
+            Map<String, Object> infoLokasi = new HashMap<>();
+            infoLokasi.put(Constants.KECAMATAN, kecamatan);
+            infoLokasi.put(Constants.HARI_MULAI, startDay);
+            infoLokasi.put(Constants.HARI_SELESAI, endDay);
+            infoLokasi.put(Constants.JAM_MULAI, startTime);
+            infoLokasi.put(Constants.JAM_SELESAI, endTime);
+
+            submitData(infoLokasi);
+        }catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == txtKecamatan){
+            shownAlertPilihKecamatan();
+        }else if (v == txtHariMulai){
+            showAlertHariMulai();
+        }else if (v == txtHariSelesai){
+            showAlertHariSelesai();
+        }else if (v == txtJamMulai){
+            RadialTimePickerDialogFragment time = new RadialTimePickerDialogFragment()
+                    .setOnTimeSetListener(KelolaLokasiActivity.this)
+                    .setStartTime(12,00)
+                    .setDoneText("OK")
+                    .setCancelText("Batal");
+            time.show(getSupportFragmentManager(), FRAG_TAG_TIME_PICKER_OPEN );
+        }else if (v == txtJamSelesai){
+            RadialTimePickerDialogFragment time = new RadialTimePickerDialogFragment()
+                    .setOnTimeSetListener(KelolaLokasiActivity.this)
+                    .setStartTime(12,00)
+                    .setDoneText("OK")
+                    .setCancelText("Batal");
+            time.show(getSupportFragmentManager(), FRAG_TAG_TIME_PICKER_CLOSE );
+        }else if (v == btnSubmit){
+          //  if (cekUpdateData()){
+                perbaruiData();
+                finish();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        //}
     }
 
-    private void enableStatusLokasiPenjual(double latitude, double longtitude){
-        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.STATUS_LOKASI).setValue(1);
+    //Select Jam
+    @Override
+    public void onTimeSet(RadialTimePickerDialogFragment dialogFragment, int jam, int menit){
+        if (dialogFragment.getTag().equals(FRAG_TAG_TIME_PICKER_OPEN)){
+            txtJamMulai.setText(String.format("%d : %d", jam, menit));
+            timeOpenInMinute = jam * 60 + menit;
+        }else {
+            txtJamSelesai.setText(String.format("%d : %d", jam, menit));
+            timeCloseInMinute = jam * 60 + menit;
+        }
+    }
 
-        geoFire.setLocation(getUid(), new GeoLocation(latitude,longtitude), new GeoFire.CompletionListener(){
+    //Select Hari
+    private void showAlertHariMulai(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pilih Hari")
+                .setSingleChoiceItems(R.array.hari, 0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mSelectedDay = which;
+                            }
+                        })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        txtHariMulai.setText(getResources().getStringArray(R.array.hari)[mSelectedDay]);
+                    }
+                })
+                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        //show dialog
+        builder.show();
+    }
+
+    private void showAlertHariSelesai(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pilih Hari")
+                .setSingleChoiceItems(R.array.hari, 0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mSelectedDay = which;
+                            }
+                        })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        txtHariSelesai.setText(getResources().getStringArray(R.array.hari)[mSelectedDay]);
+                    }
+                })
+                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        //show dialog
+        builder.show();
+    }
+
+    //Pilih Kecamatan
+    private void shownAlertPilihKecamatan(){
+        mSelectKecamatan = new ArrayList<>();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pilih Area Berdasarkan Kecamatan")
+                .setMultiChoiceItems(R.array.arrKecamatan, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked){
+                            //select item
+                            mSelectKecamatan.add(which);
+                        }else if (mSelectKecamatan.contains(which)){
+                            mSelectKecamatan.remove(Integer.valueOf(which));
+                        }
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String kecText = "";
+                        for (int i:mSelectKecamatan){
+                            kecText += getResources().getStringArray(R.array.arrKecamatan)[i];
+                            kecText += "\n";
+                        }
+                        txtKecamatan.setText(kecText);
+                    }
+                })
+                .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+    }
+
+
+    private void enableStatusLokasiPenjual(double latitude, double longtitude) {
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.STATUS_LOKASI).setValue(true);
+
+        geoFire.setLocation(getUid(), new GeoLocation(latitude, longtitude), new GeoFire.CompletionListener() {
 
             @Override
             public void onComplete(String key, DatabaseError error) {
                 if (error != null) {
                     System.err.println("There was an error saving the location to GeoFire: " + error);
                 } else {
-                    Log.d("##**##" , "Location saved successfully ");
+                    Log.d("##**##", "Location saved successfully ");
                 }
             }
         });
     }
-    private void disableStatusLokasiPenjual(){
-        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.STATUS_LOKASI).setValue(2);
+
+    private void disableStatusLokasiPenjual() {
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.STATUS_LOKASI).setValue(false);
+        geoFire.removeLocation(getUid());
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_tambah_alamat, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        if (item.getItemId() == R.id.btn_tambah_alamat){
-//            Intent intent = new Intent(KelolaLokasiActivity.this, TambahAlamatActivity.class);
-//            startActivity(intent);
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 
     @Override
@@ -236,7 +402,7 @@ public class KelolaLokasiActivity extends BaseActivity{
      * Returns the current state of the permissions needed.
      */
     private boolean checkPermissions() {
-        return  PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this,
+        return PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
@@ -285,7 +451,7 @@ public class KelolaLokasiActivity extends BaseActivity{
             if (grantResults.length <= 0) {
                 // If user interaction was interrupted, the permission request is cancelled and you
                 // receive empty arrays.
-                Log.i(TAG, "User interaction was cancelled.");
+                Log.i(TAG, "PenjualModel interaction was cancelled.");
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission was granted.
                 mService.requestLocationUpdates();
@@ -314,6 +480,8 @@ public class KelolaLokasiActivity extends BaseActivity{
         }
     }
 
+
+
     /**
      * Receiver for broadcasts sent by {@link LocationUpdatesService}.
      */
@@ -325,9 +493,9 @@ public class KelolaLokasiActivity extends BaseActivity{
                 Toast.makeText(KelolaLokasiActivity.this, LocationUtils.getLocationText(lokasi),
                         Toast.LENGTH_LONG).show();
 
-             double   getLatitude = lokasi.getLatitude();
-             double   getLongitude = lokasi.getLongitude();
-             enableStatusLokasiPenjual(getLatitude, getLongitude);
+                double getLatitude = lokasi.getLatitude();
+                double getLongitude = lokasi.getLongitude();
+                enableStatusLokasiPenjual(getLatitude, getLongitude);
             }
         }
     }

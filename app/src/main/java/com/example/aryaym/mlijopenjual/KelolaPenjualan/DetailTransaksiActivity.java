@@ -1,6 +1,7 @@
 package com.example.aryaym.mlijopenjual.KelolaPenjualan;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.Base.ImageLoader;
 import com.example.aryaym.mlijopenjual.KelolaProduk.ProdukModel;
-import com.example.aryaym.mlijopenjual.Profil.User;
+import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.firebase.database.DataSnapshot;
@@ -34,8 +35,6 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
     ImageView imgProduk;
     @BindView(R.id.txtNamaProduk)
     TextView txtNamaProduk;
-    @BindView(R.id.hargaUnitProduk)
-    TextView hargaUnitProduk;
     @BindView(R.id.jml_item_produk)
     TextView jmlItemProduk;
     @BindView(R.id.total_harga_produk)
@@ -70,13 +69,22 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
     EditText inputPenerimaPesanan;
     @BindView(R.id.txt_penerima_pesanan)
     TextView txtPenerimaPesanan;
+    @BindView(R.id.txt_harga_produk)
+    TextView txtHargaProduk;
+    @BindView(R.id.txt_satuan_digit)
+    TextView txtSatuanDigit;
+    @BindView(R.id.txt_satuan)
+    TextView txtSatuan;
+    @BindView(R.id.input_total_harga)
+    EditText inputTotalHarga;
 
+    private static final String TAG = "DetailTransaksiActivity";
 
     private DatabaseReference mDatabase;
     private TransaksiModel transaksiModel;
 
     int getStatus, statusBaru;
-    double biayaKirim;
+    double biayaKirim, totalHarga;
     String nama_penerima;
 
     @Override
@@ -104,51 +112,68 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
         if (transaksiModel.getStatusTransaksi() == 1) {
             statusTransaksi.setText(Constants.MENUNGGU);
             tombolKonfirmasiTransaksi();
-            inputBiayaKirim.setVisibility(View.VISIBLE);
-            txtBiayaKirim.setVisibility(View.GONE);
+            Log.d(TAG, "data" + transaksiModel.getTipeTransaksi());
+            if (transaksiModel.getTipeTransaksi().equals(Constants.PRODUK_REGULER)){
+                inputTotalHarga.setVisibility(View.GONE);
+                totalHargaProduk.setVisibility(View.VISIBLE);
+                inputBiayaKirim.setVisibility(View.VISIBLE);
+                txtBiayaKirim.setVisibility(View.GONE);
+            }else if (transaksiModel.getTipeTransaksi().equals(Constants.PRODUK_KHUSUS)){
+                tampilInputBiaya();
+            }
+            //tampilInputBiaya();
+
             statusLayout.setVisibility(View.GONE);
         } else if (transaksiModel.getStatusTransaksi() == 2) {
             statusTransaksi.setText(Constants.DIPROSES);
             tombolStatus();
-            inputBiayaKirim.setVisibility(View.GONE);
-            txtBiayaKirim.setVisibility(View.VISIBLE);
+            sembunyikanInputBiaya();
             penerimaLayout.setVisibility(View.GONE);
         } else if (transaksiModel.getStatusTransaksi() == 3) {
             statusTransaksi.setText(Constants.DIKIRIM);
             tombolStatus();
-            inputBiayaKirim.setVisibility(View.GONE);
-            txtBiayaKirim.setVisibility(View.VISIBLE);
+            sembunyikanInputBiaya();
             penerimaLayout.setVisibility(View.VISIBLE);
             txtPenerimaPesanan.setVisibility(View.GONE);
         } else if (transaksiModel.getStatusTransaksi() == 4) {
             statusTransaksi.setText(Constants.TERKIRIM);
             tombolStatus();
-            inputBiayaKirim.setVisibility(View.GONE);
-            txtBiayaKirim.setVisibility(View.VISIBLE);
+            sembunyikanInputBiaya();
             penerimaLayout.setVisibility(View.VISIBLE);
             inputPenerimaPesanan.setVisibility(View.GONE);
             txtPenerimaPesanan.setVisibility(View.VISIBLE);
         } else if (transaksiModel.getStatusTransaksi() == 5) {
             statusTransaksi.setText(Constants.DITOLAK);
             sembunyikanTombol();
-            inputBiayaKirim.setVisibility(View.GONE);
-            txtBiayaKirim.setVisibility(View.VISIBLE);
+            sembunyikanInputBiaya();
             penerimaLayout.setVisibility(View.GONE);
         } else if (transaksiModel.getStatusTransaksi() == 6) {
             statusTransaksi.setText(Constants.DIBATALKAN);
             sembunyikanTombol();
-            inputBiayaKirim.setVisibility(View.GONE);
-            txtBiayaKirim.setVisibility(View.VISIBLE);
+            sembunyikanInputBiaya();
             penerimaLayout.setVisibility(View.GONE);
         } else if (transaksiModel.getStatusTransaksi() == 7) {
             statusTransaksi.setText(Constants.DITERIMA);
             sembunyikanTombol();
-            inputBiayaKirim.setVisibility(View.GONE);
-            txtBiayaKirim.setVisibility(View.VISIBLE);
+            sembunyikanInputBiaya();
             penerimaLayout.setVisibility(View.VISIBLE);
             inputPenerimaPesanan.setVisibility(View.GONE);
             txtPenerimaPesanan.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void tampilInputBiaya(){
+        inputTotalHarga.setVisibility(View.VISIBLE);
+        totalHargaProduk.setVisibility(View.GONE);
+        inputBiayaKirim.setVisibility(View.VISIBLE);
+        txtBiayaKirim.setVisibility(View.GONE);
+    }
+
+    private void sembunyikanInputBiaya(){
+        inputTotalHarga.setVisibility(View.GONE);
+        totalHargaProduk.setVisibility(View.VISIBLE);
+        inputBiayaKirim.setVisibility(View.GONE);
+        txtBiayaKirim.setVisibility(View.VISIBLE);
     }
 
     private void tombolKonfirmasiTransaksi() {
@@ -156,11 +181,13 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
         btnTerimaPesanan.setVisibility(View.VISIBLE);
         btnPerbaruiStatus.setVisibility(View.GONE);
     }
+
     private void tombolStatus() {
         btnTolakPesanan.setVisibility(View.GONE);
         btnTerimaPesanan.setVisibility(View.GONE);
         btnPerbaruiStatus.setVisibility(View.VISIBLE);
     }
+
     private void sembunyikanTombol() {
         btnTolakPesanan.setVisibility(View.GONE);
         btnTerimaPesanan.setVisibility(View.GONE);
@@ -178,15 +205,22 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
 
         }
     }
+
     private void loadDataProduk() {
-        mDatabase.child(Constants.PRODUK).child(transaksiModel.getIdKategori()).child(transaksiModel.getIdProduk()).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(transaksiModel.getTipeTransaksi()).child(transaksiModel.getIdKategori()).child(transaksiModel.getIdProduk()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ProdukModel produkModel = dataSnapshot.getValue(ProdukModel.class);
                 if (produkModel != null) {
-                    ImageLoader.getInstance().loadImageOther(DetailTransaksiActivity.this, produkModel.getImgProduk().get(0), imgProduk);
-                    txtNamaProduk.setText(produkModel.getNamaProduk());
-                    hargaUnitProduk.setText("Rp." + rupiah().format(produkModel.getHargaProduk()) + "/" + produkModel.getSatuanProduk() + produkModel.getNamaSatuan());
+                    try {
+                        txtNamaProduk.setText(produkModel.getNamaProduk());
+                        txtSatuanDigit.setText(produkModel.getSatuanProduk());
+                        txtSatuan.setText(produkModel.getNamaSatuan());
+                        txtHargaProduk.setText("Rp." + rupiah().format(produkModel.getHargaProduk()));
+                        ImageLoader.getInstance().loadImageOther(DetailTransaksiActivity.this, produkModel.getImgProduk().get(0), imgProduk);
+                    } catch (Exception e) {
+
+                    }
                 }
             }
 
@@ -196,16 +230,17 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
             }
         });
     }
+
     private void loadDataAlamat() {
         mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.ALAMAT_USER).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    judulAlamat.setText(user.getJudulAlamat());
-                    namaPenerima.setText(user.getNamaPenerima());
-                    alamatLengkap.setText(user.getAlamat());
-                    telpPenerima.setText(user.getNoTelp());
+                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
+                if (penjualModel != null) {
+                    judulAlamat.setText(penjualModel.getJudulAlamat());
+                    namaPenerima.setText(penjualModel.getNamaPenerima());
+                    alamatLengkap.setText(penjualModel.getAlamat());
+                    telpPenerima.setText(penjualModel.getNoTelp());
                 }
             }
 
@@ -219,7 +254,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
 //        query.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
+//                PenjualModel user = dataSnapshot.getValue(PenjualModel.class);
 //                if (user != null) {
 //                    judulAlamat.setText(user.getJudulAlamat());
 //                    namaPenerima.setText(user.getNamaPenerima());
@@ -243,11 +278,24 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
                             @Override
                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                 //  ShowAlertDialog.showAlert("sukses", DetailTransaksiActivity.this);
-                                biayaKirim = Double.parseDouble(inputBiayaKirim.getText().toString());
-                                mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
-                                        .child(Constants.STATUS_TRANSAKSI).setValue(2);
-                                mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
-                                        .child(Constants.BIAYA_KIRIM).setValue(biayaKirim);
+                                if (transaksiModel.getTipeTransaksi().equals(Constants.PRODUK_REGULER)){
+                                    biayaKirim = Double.parseDouble(inputBiayaKirim.getText().toString());
+                                    mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.STATUS_TRANSAKSI).setValue(2);
+                                    mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.BIAYA_KIRIM).setValue(biayaKirim);
+
+                                }else {
+                                    biayaKirim = Double.parseDouble(inputBiayaKirim.getText().toString());
+                                    totalHarga = Double.parseDouble(inputTotalHarga.getText().toString());
+                                    mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.STATUS_TRANSAKSI).setValue(2);
+                                    mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.BIAYA_KIRIM).setValue(biayaKirim);
+                                    mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.JUMLAH_HARGA_PRODUK).setValue(totalHarga);
+                                }
+
                             }
                         });
                 mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.PENJUALAN_BARU).child(transaksiModel.getIdPemesanan()).removeValue();
@@ -266,10 +314,19 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
                             @Override
                             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                 //  ShowAlertDialog.showAlert("sukses", DetailTransaksiActivity.this);
-                                mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
-                                        .child(Constants.STATUS_TRANSAKSI).setValue(2);
-                                mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
-                                        .child(Constants.BIAYA_KIRIM).setValue(biayaKirim);
+                                if (transaksiModel.getTipeTransaksi().equals(Constants.PRODUK_REGULER)) {
+                                    mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.STATUS_TRANSAKSI).setValue(2);
+                                    mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.BIAYA_KIRIM).setValue(biayaKirim);
+                                } else {
+                                    mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.STATUS_TRANSAKSI).setValue(2);
+                                    mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.BIAYA_KIRIM).setValue(biayaKirim);
+                                    mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
+                                            .child(Constants.JUMLAH_HARGA_PRODUK).setValue(totalHarga);
+                            }
                             }
                         });
                 mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.PEMBELIAN_BARU).child(transaksiModel.getIdPemesanan()).removeValue();
@@ -294,7 +351,8 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
                             .child(Constants.STATUS_TRANSAKSI).setValue(statusBaru);
                     mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())
                             .child(Constants.STATUS_TRANSAKSI).setValue(statusBaru);
-                } if (getStatus == 3) {
+                }
+                if (getStatus == 3) {
                     mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan())
                             .child(Constants.STATUS_TRANSAKSI).setValue(statusBaru);
                     mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.PEMBELIAN).child(Constants.STATUS_PEMBELIAN).child(transaksiModel.getIdPemesanan())

@@ -41,7 +41,7 @@ public class ProfilFragment extends Fragment {
     TextView txtAlamat;
     Unbinder unbinder;
 
-    private User user;
+    private PenjualModel penjualModel;
     private DatabaseReference mDatabase;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -88,10 +88,10 @@ public class ProfilFragment extends Fragment {
 //        mDatabase.child(Constants.KONSUMEN).child(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-//                if (user != null){
-//                    ImageLoader.getInstance().loadImageAvatar(ProfilFragment.this.getActivity(), user.getImgAvatar(), imgAvatar);
-//                    txtHeaderName.setText(user.getNama());
+//                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
+//                if (penjualModel != null){
+//                    ImageLoader.getInstance().loadImageAvatar(ProfilFragment.this.getActivity(), penjualModel.getImgAvatar(), imgAvatar);
+//                    txtHeaderName.setText(penjualModel.getNama());
 //                }
 //            }
 //

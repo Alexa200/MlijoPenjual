@@ -28,9 +28,10 @@ import com.example.aryaym.mlijopenjual.Base.InternetConnection;
 import com.example.aryaym.mlijopenjual.Dashboard.DashboardFragment;
 import com.example.aryaym.mlijopenjual.KelolaPenjualan.KelolaPenjualanFragment;
 import com.example.aryaym.mlijopenjual.KelolaProduk.KelolaProdukFragment;
+import com.example.aryaym.mlijopenjual.Obrolan.DaftarObrolanFragment;
 import com.example.aryaym.mlijopenjual.Profil.PengaturanFragment;
 import com.example.aryaym.mlijopenjual.Profil.ProfilFragment;
-import com.example.aryaym.mlijopenjual.Profil.User;
+import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -116,11 +117,11 @@ private NavigationView navigationView;
         mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null){
-                    ImageLoader.getInstance().loadImageAvatar(MainActivity.this, user.getImgAvatar(), imgAvatar);
-                    txtUsername.setText(user.getNama());
-                    txtUserEmail.setText(user.getEmail());
+                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
+                if (penjualModel != null){
+                    ImageLoader.getInstance().loadImageAvatar(MainActivity.this, penjualModel.getAvatar(), imgAvatar);
+                    txtUsername.setText(penjualModel.getNama());
+                    txtUserEmail.setText(penjualModel.getEmail());
                 }
                 progressBar.setVisibility(View.GONE);
                 linearLayout.setVisibility(View.VISIBLE);
@@ -220,6 +221,9 @@ private NavigationView navigationView;
 //                startActivity(intentHarga);
                 break;
             case R.id.pesan:
+                DaftarObrolanFragment daftarObrolanFragment = new DaftarObrolanFragment();
+                transaction.addToBackStack(DaftarObrolanFragment.class.getName());
+                transaction.replace(R.id.main_fragment_container, daftarObrolanFragment).commit();
                 break;
             case R.id.setting:
                 PengaturanFragment pengaturanFragment = new PengaturanFragment();
