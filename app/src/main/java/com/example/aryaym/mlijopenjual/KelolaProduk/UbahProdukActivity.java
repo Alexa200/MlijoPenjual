@@ -149,7 +149,7 @@ public class UbahProdukActivity extends BaseActivity {
                             inputNamaProduk.setText(produkModel.getNamaProduk());
                             inputKategoriView.setText(produkModel.getKategoriProduk());
                             //image
-                            inputHargaProduk.setText(Double.toString(produkModel.getHargaProduk()) );
+                            inputHargaProduk.setText(rupiah().format(produkModel.getHargaProduk()) );
                             inputNominalSatuan.setText(produkModel.getSatuanProduk());
                             namaSatuanView.setText(produkModel.getNamaSatuan());
                             inputDeskripsiProduk.setText(produkModel.getDeskripsiProduk());

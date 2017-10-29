@@ -3,17 +3,21 @@ package com.example.aryaym.mlijopenjual.Profil;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.aryaym.mlijopenjual.Base.BaseActivity;
+import com.example.aryaym.mlijopenjual.Base.ImageLoader;
 import com.example.aryaym.mlijopenjual.R;
+import com.example.aryaym.mlijopenjual.Utils.Constants;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,45 +67,46 @@ public class ProfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getActivity().setTitle(R.string.title_profil);
-
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         final View view = inflater.inflate(R.layout.fragment_profil, container, false);
         unbinder = ButterKnife.bind(this, view);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-      //  loadData();
+        loadData();
         btnPengaturan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PengaturanFragment pengaturanFragment = new PengaturanFragment();
                 getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, pengaturanFragment).commit();
-//                DrawerLayout drawer = (DrawerLayout) view.findViewById(R.id.drawer_layout);
-//                drawer.closeDrawer(GravityCompat.START);
             }
         });
         return view;
 
     }
 
-//    private void loadData(){
-//
-//        mDatabase.child(Constants.KONSUMEN).child(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
-//                if (penjualModel != null){
-//                    ImageLoader.getInstance().loadImageAvatar(ProfilFragment.this.getActivity(), penjualModel.getImgAvatar(), imgAvatar);
-//                    txtHeaderName.setText(penjualModel.getNama());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
+    private void loadData(){
+
+        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
+                if (penjualModel != null){
+                    try {
+                        txtHeaderName.setText(penjualModel.getDetailPenjual().get(Constants.NAMA).toString());
+                        txtEmail.setText(penjualModel.getEmail());
+                        txtNomorTelp.setText(penjualModel.getDetailPenjual().get(Constants.TELPON).toString());
+                        txtAlamat.setText(penjualModel.getDetailPenjual().get(Constants.ALAMAT).toString());
+                        ImageLoader.getInstance().loadImageAvatar(ProfilFragment.this.getActivity(), penjualModel.getDetailPenjual().get(Constants.AVATAR).toString(), imgAvatar);
+                    }catch (Exception e){
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     @Override
     public void onAttach(Context context) {

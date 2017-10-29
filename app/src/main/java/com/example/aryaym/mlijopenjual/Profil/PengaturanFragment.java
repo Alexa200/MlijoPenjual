@@ -48,8 +48,6 @@ public class PengaturanFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         getActivity().setTitle(R.string.title_atur_profil);
-//        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
         View view = inflater.inflate(R.layout.fragment_pengaturan, container, false);
         unbinder = ButterKnife.bind(this, view);
 

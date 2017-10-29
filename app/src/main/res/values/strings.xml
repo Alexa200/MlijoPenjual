@@ -6,7 +6,7 @@
     <string name="takePicture">Take a photo</string>
     <string name="msg_simpan_img_error">simpan gambar error</string>
     <string name="msg_gambar_tersimpan">gambar tersimpan</string>
-        <!-- Title -->
+    <!-- Title -->
     <string name="app_name">Mlijo Penjual</string>
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="title_activity_main">MainActivity</string>
@@ -18,17 +18,17 @@
     <string name="title_activity_kelola_lokasi">Kelola Lokasi Berjualan</string>
     <string name="title_activity_detail_transaksi">Detail Transaksi</string>
     <string name="title_profil">Profil</string>
-        <!-- Hint -->
+    <!-- Hint -->
     <string name="hint_pengaturan">  Pengaturan  </string>
     <string name="action_settings">Settings</string>
     <string name="search_hint">cari</string>
-        <!-- Button -->
-        <!-- Label -->
+    <!-- Button -->
+    <!-- Label -->
     <string name="lbl_ya">Ya</string>
     <string name="lbl_tidak">Tidak</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-        <!-- Pesan -->
+    <!-- Pesan -->
     <string name="msg_retry">Coba lagi</string>
     <string name="msg_noInternet">Anda tidak tersambung internet</string>
     <string name="msg_loading">loading...</string>
@@ -36,7 +36,7 @@
     <string name="msg_confirmLogOut">Apakah anda yakin akan logout?</string>
     <string name="msg_keluarAplikasi">Apakah anda ingin keluar aplikasi?</string>
     <string name="msg_tidak_boleh_kosong">Anda harus mengisi Form yang tersedia !</string>
-        <!-- Label Lokasi -->
+    <!-- Label Lokasi -->
     <string name="permission_rationale">Location permission is needed for core functionality</string>
     <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>
     <string name="settings">Settings</string>
@@ -44,7 +44,7 @@
     <string name="launch_activity">Launch activity</string>
     <string name="remove_location_updates">Remove location updates</string>
     <string name="location_updated">Location Updated: %1$s</string>
-        <!-- Data -->
+    <!-- Data -->
     <string-array name="hari">
         <item>Minggu</item>
         <item>Senin</item>
@@ -58,7 +58,7 @@
 
     <!-- PenjualModel -->
     <string name="action_sign_in_short">Register</string>
-        <!-- Hint -->
+    <!-- Hint -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Sandi Anda</string>
     <string name="hint_name">Nama Lengkap</string>
@@ -70,17 +70,17 @@
     <string name="hint_hari_selesai">Selesai</string>
     <string name="hint_jam_mulai">Buka mulai</string>
     <string name="hint_jam_selesai">Selesai</string>
-        <!-- Button -->
+    <!-- Button -->
     <string name="btn_login">LOGIN</string>
     <string name="btn_forgot_password">Lupa Sandi Anda?</string>
     <string name="btn_reset_password">Reset Sandi</string>
     <string name="btn_back"><![CDATA[<< Kembali]]></string>
     <string name="btn_submit">Simpan</string>
-        <!-- Label -->
+    <!-- Label -->
     <string name="lbl_forgot_password">Lupa Sandi?</string>
     <string name="lbl_kelola_profil">Kelola Profil</string>
     <string name="lbl_atur_lokasi">Pengaturan Lokasi</string>
-        <!-- Pesan -->
+    <!-- Pesan -->
     <string name="msg_email_kosong">Mohon isi email anda</string>
     <string name="msg_minimum_password">Sandi terlalu pendek, input minimal 6 karakter</string>
     <string name="msg_password_kosong">Mohon isi password anda</string>
@@ -158,25 +158,25 @@
     <!-- PenjualModel -->
 
     <!-- Dashboard -->
-        <!-- Hint -->
-        <!-- Button -->
-        <!-- Label -->
+    <!-- Hint -->
+    <!-- Button -->
+    <!-- Label -->
     <string name="lbl_kategori">Kategori Produk</string>
     <string name="lbl_penjual">Daftar Penjual</string>
-        <!-- Pesan -->
+    <!-- Pesan -->
     <!-- Dashboard -->
 
 
     <!-- Produk -->
-        <!-- Hint -->
-        <!-- Button -->
-        <!-- Label -->
+    <!-- Hint -->
+    <!-- Button -->
+    <!-- Label -->
     <string name="lbl_nama_produk">Nama Produk</string>
     <string name="lbl_jumlah_produk">Jumlah Produk</string>
     <string name="lbl_satuan_produk">Satuan Produk</string>
-        <!-- Pesan -->
+    <!-- Pesan -->
     <string name="msg_hapusProduk">Apakah anda yakin akan menghapus produk tersebut?</string>
-        <!-- Data -->
+    <!-- Data -->
     <string-array name="arrKategori">
         <item>Sayuran</item>
     </string-array>
@@ -201,10 +201,9 @@
     <string name="lbl_alamat_kirim">Alamat Pengiriman</string>
     <string name="lbl_total_harga">Total Harga Produk :</string>
     <string name="lbl_porsi">(Harga 1 Porsi)</string>
+    <string name="title_activity_obrolan">Daftar Obrolan</string>
     <!-- Pesan -->
     <!-- Kelola Penjualan Produk -->
-
-
 
 
 </resources>

@@ -109,9 +109,9 @@ public class PengaturanProfilActivity extends BaseActivity
                         PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
                         if (penjualModel != null){
                             try {
-                                ImageLoader.getInstance().loadImageAvatar(PengaturanProfilActivity.this, penjualModel.getAvatar(), imgPenjual);
-                                inputAlamatPenjual.setText(penjualModel.getAlamat());
-                                inputTeleponPenjual.setText(penjualModel.getNoTelp());
+                                //ImageLoader.getInstance().loadImageAvatar(PengaturanProfilActivity.this, penjualModel.getDetailPenjual().get(Constants.AVATAR).toString(), imgPenjual);
+                                inputAlamatPenjual.setText(penjualModel.getDetailPenjual().get(Constants.ALAMAT).toString());
+                                inputTeleponPenjual.setText(penjualModel.getDetailPenjual().get(Constants.TELPON).toString());
                                 //get kategori
                                 if (Boolean.parseBoolean(penjualModel.getInfoKategori().get(Constants.KATEGORI_SAYURAN).toString())){
                                     chkSayuran.setChecked(true);
@@ -153,6 +153,7 @@ public class PengaturanProfilActivity extends BaseActivity
                                 }else {
                                     chkLain.setChecked(false);
                                 }
+                                ImageLoader.getInstance().loadImageAvatar(PengaturanProfilActivity.this, penjualModel.getDetailPenjual().get(Constants.AVATAR).toString(), imgPenjual);
                             }catch (Exception e){
 
                             }
@@ -180,12 +181,9 @@ public class PengaturanProfilActivity extends BaseActivity
     }
 
     private void submitData(String alamat, String notelp,  Map<String, Object> detailInfo){
-        Map<String, Object> updateDataPenjual = new HashMap<>();
-        updateDataPenjual.put(Constants.ALAMAT, alamat);
-        updateDataPenjual.put(Constants.TELPON, notelp);
-        updateDataPenjual.put(Constants.INFO_KATEGORI, detailInfo);
-
-        mDatabase.child(Constants.PENJUAL).child(getUid()).updateChildren(updateDataPenjual);
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.INFO_KATEGORI).updateChildren(detailInfo);
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.DETAIL_PENJUAL).child(Constants.ALAMAT).setValue(alamat);
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.DETAIL_PENJUAL).child(Constants.TELPON).setValue(notelp);
     }
 
     private void perbaruiData(){
@@ -279,11 +277,6 @@ public class PengaturanProfilActivity extends BaseActivity
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUri);
         startActivityForResult(cameraIntent, Constants.CAMERA_INTENT);
-
-//        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePhotoIntent.resolveActivity(getPackageManager()) != null) {
-//            startActivityForResult(takePhotoIntent, Constants.CAMERA_INTENT);
-//        }
     }
 
     @Override
@@ -388,7 +381,7 @@ public class PengaturanProfilActivity extends BaseActivity
     public void editUserPhotoURL(String uid, String photoURL) {
         Map<String, Object> myMap = new HashMap<>();
         myMap.put(Constants.AVATAR, photoURL);
-        mDatabase.child(Constants.PENJUAL).child(uid).updateChildren(myMap);
+        mDatabase.child(Constants.PENJUAL).child(uid).child(Constants.DETAIL_PENJUAL).updateChildren(myMap);
     }
 
     public void addImageUser(String uid, OnSuccessListener<UploadTask.TaskSnapshot> listener) {
@@ -396,7 +389,7 @@ public class PengaturanProfilActivity extends BaseActivity
             bitmapDataUser = EncodeImage.encodeImage(Constants.USER_FILE_PATH);
         }
         if (bitmapDataUser != null) {
-            StorageReference filePathAvatar = mStorage.child(Constants.USER_AVATAR).child(uid).child(Constants.AVATAR);
+            StorageReference filePathAvatar = mStorage.child(Constants.USER_AVATAR).child(Constants.PENJUAL).child(uid).child(Constants.AVATAR);
             UploadTask uploadTask = filePathAvatar.putBytes(bitmapDataUser);
             uploadTask.addOnSuccessListener(listener);
 

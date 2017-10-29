@@ -99,7 +99,7 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         mStorage = FirebaseStorage.getInstance().getReference();
         konsumenModel = (KonsumenModel) getIntent().getSerializableExtra(Constants.KONSUMEN_MODEL);
         penerimaId = konsumenModel.getUid();
-        namaPenerima = konsumenModel.getNama();
+        namaPenerima = konsumenModel.getDetailKonsumen().get(Constants.NAMA).toString();
         deviceToken = konsumenModel.getDeviceToken();
         //init
         presenter = new ObrolanPresenter(this);
@@ -435,8 +435,7 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         try {
             ObrolanTerakhir obrolanTerakhir = new ObrolanTerakhir(penerimaId, obrolanModel.getTimestamp()* -1);
             Map<String, Object> data = obrolanTerakhir.toMap();
-            mDatabase.child(Constants.KONSUMEN).child(pengirimId).child(Constants.OBROLAN).child(penerimaId).updateChildren(data);
-            // mDatabase.child(Constants.PENJUAL).child(penerimaId).child(Constants.OBROLAN).child(pengirimId).updateChildren(data);
+            mDatabase.child(Constants.KONSUMEN).child(penerimaId).child(Constants.OBROLAN).child(pengirimId).updateChildren(data);
         }catch (Exception e){
 
         }
@@ -445,8 +444,7 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         try {
             ObrolanTerakhir obrolanTerakhir = new ObrolanTerakhir(penerimaId, obrolanModel.getTimestamp()* -1);
             Map<String, Object> data = obrolanTerakhir.toMap();
-            //   mDatabase.child(Constants.KONSUMEN).child(pengirimId).child(Constants.OBROLAN).child(penerimaId).updateChildren(data);
-            mDatabase.child(Constants.PENJUAL).child(penerimaId).child(Constants.OBROLAN).child(pengirimId).updateChildren(data);
+            mDatabase.child(Constants.PENJUAL).child(pengirimId).child(Constants.OBROLAN).child(penerimaId).updateChildren(data);
         }catch (Exception e){
 
         }

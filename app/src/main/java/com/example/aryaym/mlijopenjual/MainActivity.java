@@ -118,10 +118,14 @@ private NavigationView navigationView;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
-                if (penjualModel != null){
-                    ImageLoader.getInstance().loadImageAvatar(MainActivity.this, penjualModel.getAvatar(), imgAvatar);
-                    txtUsername.setText(penjualModel.getNama());
-                    txtUserEmail.setText(penjualModel.getEmail());
+                if (penjualModel != null) {
+                    try {
+                        txtUsername.setText(penjualModel.getDetailPenjual().get(Constants.NAMA).toString());
+                        txtUserEmail.setText(penjualModel.getEmail());
+                        ImageLoader.getInstance().loadImageAvatar(MainActivity.this, penjualModel.getDetailPenjual().get(Constants.AVATAR).toString(), imgAvatar);
+                    }catch (Exception e){
+
+                    }
                 }
                 progressBar.setVisibility(View.GONE);
                 linearLayout.setVisibility(View.VISIBLE);

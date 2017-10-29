@@ -23,9 +23,14 @@ public class PenjualModel implements Serializable{
     private String namaPenerima;
     private Map<String, Object> infoKategori;
     private Map<String, Object> infoLokasi;
+    private Map<String, Object> detailPenjual;
     private HashMap<String, Object> alamatUser;
 
     public PenjualModel(){}
+
+    public Map<String, Object> getDetailPenjual() {
+        return detailPenjual;
+    }
 
     public Map<String, Object> getInfoLokasi() {
         return infoLokasi;

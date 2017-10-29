@@ -44,7 +44,7 @@ public class DaftarObrolanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         view = inflater.inflate(R.layout.fragment_daftar_obrolan, container, false);
-        //getActivity().setTitle(R.string.title_activity_obrolan);
+        getActivity().setTitle(R.string.title_activity_obrolan);
         mRecycler = (RecyclerView) view.findViewById(R.id.recycler_chat);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         mDatabase = FirebaseDatabase.getInstance().getReference();

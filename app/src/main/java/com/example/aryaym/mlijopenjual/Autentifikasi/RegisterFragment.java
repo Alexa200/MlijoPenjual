@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.aryaym.mlijopenjual.MainActivity;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,20 +26,13 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
- * Created by AryaYM on 27/05/2017.
+ * Created by AryaYM on 28/10/2017.
  */
 
-public class RegisterActivity extends Fragment {
+public class RegisterFragment extends Fragment {
 
-    @BindView(R.id.noktp)
-    EditText inputKTP;
-    @BindView(R.id.nama)
-    EditText inputNama;
-    @BindView(R.id.nomortelp)
-    EditText inputNoTelp;
     @BindView(R.id.email)
     EditText inputEmail;
     @BindView(R.id.password)
@@ -49,10 +41,10 @@ public class RegisterActivity extends Fragment {
     Button signUpButton;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    Unbinder unbinder;
+
     private FirebaseAuth auth;
 
-    public RegisterActivity() {
+    public RegisterFragment() {
         // Required empty public constructor
     }
 
@@ -65,8 +57,8 @@ public class RegisterActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.activity_register, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -79,9 +71,6 @@ public class RegisterActivity extends Fragment {
             @Override
             public void onClick(View v) {
 
-                final String noktp = inputKTP.getText().toString().trim();
-                final String nama = inputNama.getText().toString().trim();
-                final String notelp = inputNoTelp.getText().toString().trim();
                 final String email = inputEmail.getText().toString().trim();
                 final String password = inputPassword.getText().toString().trim();
 
@@ -100,8 +89,8 @@ public class RegisterActivity extends Fragment {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(getActivity(),"Harap tunggu, sedang proses membuat akun anda", Toast.LENGTH_LONG).show();
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this.getActivity(), new OnCompleteListener<AuthResult>() {
+                Toast.makeText(getActivity(), "Harap tunggu, sedang proses membuat akun anda", Toast.LENGTH_LONG).show();
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterFragment.this.getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Toast.makeText(getActivity(), "Akun anda berhasil dibuat", Toast.LENGTH_SHORT).show();
@@ -111,16 +100,10 @@ public class RegisterActivity extends Fragment {
                             auth.signInWithEmailAndPassword(email, password);
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.PENJUAL);
                             DatabaseReference currentUserDB = mDatabase.child(auth.getCurrentUser().getUid());
-                            currentUserDB.child(Constants.NIK).setValue(noktp);
-                            currentUserDB.child(Constants.NAMA).setValue(nama);
-                            currentUserDB.child(Constants.TELPON).setValue(notelp);
                             currentUserDB.child(Constants.EMAIL).setValue(email);
                             currentUserDB.child(Constants.UID).setValue(getUid());
                             currentUserDB.child(Constants.DEVICE_TOKEN).setValue(getToken());
-                            currentUserDB.child(Constants.PENJUALAN).child(Constants.PENJUALAN_BARU).child(Constants.TRANSAKSI_COUNT).setValue(0);
-                            currentUserDB.child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(Constants.TRANSAKSI_COUNT).setValue(0);
-                            currentUserDB.child(Constants.PENJUALAN).child(Constants.RIWAYAT_TRANSAKSI).child(Constants.TRANSAKSI_COUNT).setValue(0);
-                            startActivity(new Intent(RegisterActivity.this.getActivity(), MainActivity.class));
+                            startActivity(new Intent(RegisterFragment.this.getActivity(), DataUserBaruActivity.class));
                             getActivity().finish();
                         } else {
                             Toast.makeText(getActivity(), "error" + task.getException(), Toast.LENGTH_SHORT).show();
@@ -131,19 +114,12 @@ public class RegisterActivity extends Fragment {
         });
     }
 
-    private String getToken(){
+    private String getToken() {
         return FirebaseInstanceId.getInstance().getToken();
     }
 
     @NonNull
     private String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }

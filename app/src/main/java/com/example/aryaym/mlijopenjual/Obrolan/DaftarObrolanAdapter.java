@@ -61,8 +61,8 @@ public class DaftarObrolanAdapter extends RecyclerView.Adapter<DaftarObrolanAdap
                     if (dataSnapshot != null){
                         final KonsumenModel konsumenModel = dataSnapshot.getValue(KonsumenModel.class);
                         if (konsumenModel != null){
-                            holder.txtNamaPenerima.setText(konsumenModel.getNama());
-                            ImageLoader.getInstance().loadImageAvatar(activity, konsumenModel.getAvatar(), holder.imgAvatar);
+                            holder.txtNamaPenerima.setText(konsumenModel.getDetailKonsumen().get(Constants.NAMA).toString());
+                            ImageLoader.getInstance().loadImageAvatar(activity, konsumenModel.getDetailKonsumen().get(Constants.AVATAR).toString(), holder.imgAvatar);
                         }
                         //event click
                         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -336,7 +336,7 @@ public class KelolaLokasiActivity extends BaseActivity
                         String kecText = "";
                         for (int i:mSelectKecamatan){
                             kecText += getResources().getStringArray(R.array.arrKecamatan)[i];
-                            kecText += "\n";
+                            kecText += ",";
                         }
                         txtKecamatan.setText(kecText);
                     }

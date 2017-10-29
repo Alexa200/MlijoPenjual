@@ -41,7 +41,7 @@ public class ObrolanPresenter {
         try {
             ObrolanTerakhir obrolanTerakhir = new ObrolanTerakhir(penerimaId, obrolanModel.getTimestamp()* -1);
             Map<String, Object> data = obrolanTerakhir.toMap();
-            mDatabase.child(Constants.KONSUMEN).child(pengirimId).child(Constants.OBROLAN).child(penerimaId).updateChildren(data);
+            mDatabase.child(Constants.KONSUMEN).child(penerimaId).child(Constants.OBROLAN).child(pengirimId).updateChildren(data);
            // mDatabase.child(Constants.PENJUAL).child(penerimaId).child(Constants.OBROLAN).child(pengirimId).updateChildren(data);
         }catch (Exception e){
 
@@ -52,7 +52,7 @@ public class ObrolanPresenter {
             ObrolanTerakhir obrolanTerakhir = new ObrolanTerakhir(penerimaId, obrolanModel.getTimestamp()* -1);
             Map<String, Object> data = obrolanTerakhir.toMap();
          //   mDatabase.child(Constants.KONSUMEN).child(pengirimId).child(Constants.OBROLAN).child(penerimaId).updateChildren(data);
-            mDatabase.child(Constants.PENJUAL).child(penerimaId).child(Constants.OBROLAN).child(pengirimId).updateChildren(data);
+            mDatabase.child(Constants.PENJUAL).child(pengirimId).child(Constants.OBROLAN).child(penerimaId).updateChildren(data);
         }catch (Exception e){
 
         }

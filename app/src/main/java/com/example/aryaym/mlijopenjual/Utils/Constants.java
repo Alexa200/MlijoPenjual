@@ -19,7 +19,7 @@ public class Constants {
     public static final String AVATAR = "avatar";
     public static final String USER_AVATAR = "userAvatar";
     public static final String NAMA = "nama";
-    public static final String KTP = "noKTP";
+    public static final String NIK = "NIK";
     public static final String TELPON = "noTelp";
     public static final String EMAIL = "email";
     public static final String UID = "uid";
@@ -29,6 +29,7 @@ public class Constants {
     public static final String STATUS_LOKASI = "statusLokasi";
     public static final String INFO_KATEGORI = "infoKategori";
     public static final String INFO_LOKASI = "infoLokasi";
+    public static final String DETAIL_PENJUAL = "detailPenjual";
     //InfoDetail
     public static final String KECAMATAN = "kecamatan";
     public static final String HARI_MULAI = "hariMulai";

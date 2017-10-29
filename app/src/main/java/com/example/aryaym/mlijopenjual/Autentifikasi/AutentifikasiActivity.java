@@ -51,7 +51,7 @@ public class AutentifikasiActivity extends AppCompatActivity {
                 case 0:
                     return new LoginActivity();
                 case 1:
-                    return new RegisterActivity();
+                    return new RegisterFragment();
             }
             return null;
         }

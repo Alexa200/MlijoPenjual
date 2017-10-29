@@ -13,18 +13,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
-import com.example.aryaym.mlijopenjual.Base.InternetConnection;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.example.aryaym.mlijopenjual.Utils.MyLinearLayoutManager;
 import com.example.aryaym.mlijopenjual.Utils.ShowSnackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,61 +68,98 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         mRecycler.setLayoutManager(customLinearLayoutManager);
         mRecycler.setAdapter(kelolaProdukAdapter);
         fabNewProduk.setOnClickListener(this);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-
-            if (InternetConnection.getInstance().isOnline(getActivity())) {
-                //loadData();
-                handleData();
-                fabNewProduk.setVisibility(View.VISIBLE);
-            } else {
-                progressBar.setVisibility(View.GONE);
-                fabNewProduk.setVisibility(View.GONE);
-            }
-
-        } else {
-            fabNewProduk.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE);
-            mRecycler.setVisibility(View.VISIBLE);
-        }
+        loadData();
+//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+//
+//            if (InternetConnection.getInstance().isOnline(getActivity())) {
+//                loadData();
+//                //handleData();
+//                fabNewProduk.setVisibility(View.VISIBLE);
+//            } else {
+//                progressBar.setVisibility(View.GONE);
+//                fabNewProduk.setVisibility(View.GONE);
+//            }
+//
+//        } else {
+//            fabNewProduk.setVisibility(View.GONE);
+//            progressBar.setVisibility(View.GONE);
+//            mRecycler.setVisibility(View.VISIBLE);
+//        }
         return rootView;
     }
 
     private void showItemData() {
         progressBar.setVisibility(View.GONE);
         mRecycler.setVisibility(View.VISIBLE);
+        imgNoResult.setVisibility(View.GONE);
     }
 
     private void hideItemData() {
         progressBar.setVisibility(View.VISIBLE);
         mRecycler.setVisibility(View.GONE);
+        imgNoResult.setVisibility(View.GONE);
     }
 
-//    private void loadData() {
-//        try {
-//            getAllPost(BaseActivity.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    try {
-//                        if (dataSnapshot.exists()) {
-//                            hideItemData();
-//                        } else {
-//                            progressBar.setVisibility(View.GONE);
-//                        }
-//                        handleData();
-//                    } catch (Exception e) {
-//              //          ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.error));
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//        } catch (Exception e) {
-//           // ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.error));
-//        }
-//    }
+    private void loadData() {
+        try {
+            getAllPost(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        hideItemData();
+                        getAllPost(BaseActivity.getUid()).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                try {
+                                    if (dataSnapshot != null){
+                                        PostRef postRef = dataSnapshot.getValue(PostRef.class);
+                                        if (!postRefs.contains(postRef)) {
+                                            postRefs.add(postRef);
+                                            kelolaProdukAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                    showItemData();
+                                }catch (Exception e){
+
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }else {
+                        imgNoResult.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        mRecycler.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
+           // ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.error));
+        }
+    }
 
     public Query getAllPost(String uid) {
         Query query = mDatabase.child(Constants.PENJUAL).child(uid).child(Constants.PRODUK);
