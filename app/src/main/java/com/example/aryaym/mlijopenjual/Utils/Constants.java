@@ -94,4 +94,8 @@ public class Constants {
     public static final String PENGIRIM = "pengirim";
     public static final String TIMESTAMP = "timestamp";
     public static final String ID_PENERIMA = "idPenerima";
+    //Informasi Konsumen
+    public static final String DETAIL_KONSUMEN = "detailKonsumen";
+    public static final String LONGITUDE = "longitude";
+    public static final String LATITUDE = "latitude";
 }

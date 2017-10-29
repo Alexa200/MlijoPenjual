@@ -106,7 +106,7 @@ public class KelolaPenjualanFragment extends Fragment {
     }
 
     private void loadData(){
-        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PENJUALAN).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PENJUALAN).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long newOrder = dataSnapshot.child(Constants.PENJUALAN_BARU).getChildrenCount();

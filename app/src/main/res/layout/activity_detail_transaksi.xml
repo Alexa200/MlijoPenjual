@@ -236,12 +236,6 @@
                     android:orientation="vertical"
                     android:padding="5dp"
                     android:background="@color/grey_dark">
-
-                    <TextView
-                        android:id="@+id/judul_alamat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ID Alamat"/>
                     <TextView
                         android:id="@+id/nama_penerima"
                         android:layout_width="wrap_content"
@@ -266,12 +260,14 @@
                     android:weightSum="2">
 
                     <Button
+                        android:id="@+id/btn_kirim_pesan"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Kirim Pesan"/>
 
                     <Button
+                        android:id="@+id/btn_lihat_peta"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
