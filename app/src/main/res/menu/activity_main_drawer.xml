@@ -23,7 +23,11 @@
             android:icon="@drawable/ic_message"
             android:title="Pesan" />
         <item
-            android:id="@+id/setting"
+            android:id="@+id/ulasan"
+            android:icon="@drawable/ic_rate_review_black_24dp"
+            android:title="Ulasan"></item>
+        <item
+            android:id="@+id/pengaturan"
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="Pengaturan" />
 

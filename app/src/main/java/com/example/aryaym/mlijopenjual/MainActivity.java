@@ -30,8 +30,9 @@ import com.example.aryaym.mlijopenjual.KelolaPenjualan.KelolaPenjualanFragment;
 import com.example.aryaym.mlijopenjual.KelolaProduk.KelolaProdukFragment;
 import com.example.aryaym.mlijopenjual.Obrolan.DaftarObrolanFragment;
 import com.example.aryaym.mlijopenjual.Profil.PengaturanFragment;
-import com.example.aryaym.mlijopenjual.Profil.ProfilFragment;
 import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
+import com.example.aryaym.mlijopenjual.Profil.ProfilFragment;
+import com.example.aryaym.mlijopenjual.Ulasan.DaftarUlasanFragment;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -229,7 +230,12 @@ private NavigationView navigationView;
                 transaction.addToBackStack(DaftarObrolanFragment.class.getName());
                 transaction.replace(R.id.main_fragment_container, daftarObrolanFragment).commit();
                 break;
-            case R.id.setting:
+            case R.id.ulasan:
+                DaftarUlasanFragment daftarUlasanFragment = new DaftarUlasanFragment();
+                transaction.addToBackStack(DaftarUlasanFragment.class.getName());
+                transaction.replace(R.id.main_fragment_container, daftarUlasanFragment).commit();
+                break;
+            case R.id.pengaturan:
                 PengaturanFragment pengaturanFragment = new PengaturanFragment();
                 transaction.addToBackStack(PengaturanFragment.class.getName());
                 transaction.replace(R.id.main_fragment_container, pengaturanFragment).commit();

@@ -26,4 +26,7 @@
     <color name="cardviewBackground">#F2F5FA</color>
     <color name="merah">#FF0000</color>
     <color name="transparent_black">#94333232</color>
+
+    <color name="ratingBarActived">#ffbf41</color>
+    <color name="ratingBarNotActived">#ffde9d</color>
 </resources>

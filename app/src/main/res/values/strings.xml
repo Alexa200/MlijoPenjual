@@ -202,8 +202,18 @@
     <string name="lbl_total_harga">Total Harga Produk :</string>
     <string name="lbl_porsi">(Harga 1 Porsi)</string>
     <string name="title_activity_obrolan">Daftar Obrolan</string>
+    <string name="lbl_nama_konsumen">Nama Konsumen</string>
     <!-- Pesan -->
     <!-- Kelola Penjualan Produk -->
 
+    <!-- Ulasan -->
+    <!-- Hint -->
+    <!-- Button -->
+    <!-- Label -->
+    <string name="lbl_penilaian_penjual">Penilaian Penjual</string>
+    <string name="lbl_kualitas_produk">Kualitas Produk</string>
+    <string name="lbl_kualitas_pelayanan">Kualitas Pelayanan</string>
+    <!-- Pesan -->
+    <!-- Ulasan -->
 
 </resources>

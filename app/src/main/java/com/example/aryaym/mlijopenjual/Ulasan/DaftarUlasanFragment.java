@@ -1,9 +1,12 @@
-package com.example.aryaym.mlijopenjual.KelolaPenjualan;
+package com.example.aryaym.mlijopenjual.Ulasan;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -23,42 +26,43 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
-public class ListTransaksiActivity extends BaseActivity {
+/**
+ * Created by AryaYM on 30/10/2017.
+ */
 
-    String title, jenisTransaksi;
-    @BindView(R.id.recycler_list_transaksi)
+public class DaftarUlasanFragment extends Fragment {
+
+    @BindView(R.id.recycler_list_ulasan)
     RecyclerView mRecycler;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.img_no_result)
     ImageView imgNoResult;
+    Unbinder unbinder;
 
     private DatabaseReference mDatabase;
-    private List<TransaksiModel> transaksiList = new ArrayList<>();
-    private ListTransaksiAdapter listTransaksiAdapter;
+    private List<UlasanModel> ulasanList = new ArrayList<>();
+    private DaftarUlasanAdapter daftarUlasanAdapter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_transaksi);
-        ButterKnife.bind(this);
-        title = getIntent().getStringExtra(Constants.TITLE);
-        jenisTransaksi = getIntent().getStringExtra(Constants.TRANSAKSI);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_daftar_ulasan, container, false);
+        getActivity().setTitle("Ulasan");
+        unbinder = ButterKnife.bind(this, view);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        listTransaksiAdapter = new ListTransaksiAdapter(this, transaksiList);
-        getSupportActionBar().setTitle(title);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getDataTransaksi();
-
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.setAdapter(listTransaksiAdapter);
+        loadDataPenjual();
+        daftarUlasanAdapter = new DaftarUlasanAdapter(this.getActivity(), ulasanList);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        mRecycler.setAdapter(daftarUlasanAdapter);
+        return view;
     }
 
     private void showItemData() {
         progressBar.setVisibility(View.GONE);
         mRecycler.setVisibility(View.VISIBLE);
+        imgNoResult.setVisibility(View.GONE);
     }
 
     private void hideItemData() {
@@ -66,28 +70,33 @@ public class ListTransaksiActivity extends BaseActivity {
         mRecycler.setVisibility(View.GONE);
         imgNoResult.setVisibility(View.GONE);
     }
+    private void tidakAdaUlasan() {
+        progressBar.setVisibility(View.GONE);
+        mRecycler.setVisibility(View.GONE);
+        imgNoResult.setVisibility(View.VISIBLE);
+    }
 
-    private Query getData(){
-        Query query = mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(jenisTransaksi);
+    private Query getListUlasan(){
+        Query query = mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.ULASAN);
         return query;
     }
 
-    private void getDataTransaksi(){
+    private void loadDataPenjual(){
         try {
-            getData().addValueEventListener(new ValueEventListener() {
+            getListUlasan().addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()){
                         hideItemData();
-                        getData().addChildEventListener(new ChildEventListener() {
+                        getListUlasan().addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 try {
                                     if (dataSnapshot != null){
-                                        TransaksiModel transaksiModel = dataSnapshot.getValue(TransaksiModel.class);
-                                        if (!transaksiList.contains(transaksiModel)){
-                                            transaksiList.add(transaksiModel);
-                                            listTransaksiAdapter.notifyDataSetChanged();
+                                        UlasanModel ulasanModel = dataSnapshot.getValue(UlasanModel.class);
+                                        if (!ulasanList.contains(ulasanModel)){
+                                            ulasanList.add(ulasanModel);
+                                            daftarUlasanAdapter.notifyDataSetChanged();
                                         }
                                     }
                                     showItemData();
@@ -117,9 +126,7 @@ public class ListTransaksiActivity extends BaseActivity {
                             }
                         });
                     }else {
-                        imgNoResult.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                        mRecycler.setVisibility(View.GONE);
+                        tidakAdaUlasan();
                     }
                 }
 
@@ -131,5 +138,11 @@ public class ListTransaksiActivity extends BaseActivity {
         }catch (Exception e){
 
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

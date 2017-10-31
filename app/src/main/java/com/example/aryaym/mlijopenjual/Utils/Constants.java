@@ -98,4 +98,12 @@ public class Constants {
     public static final String DETAIL_KONSUMEN = "detailKonsumen";
     public static final String LONGITUDE = "longitude";
     public static final String LATITUDE = "latitude";
+    //Ulasan
+    public static final String ID_ULASAN = "idUlasan";
+    public static final String ULASAN = "ulasan";
+    public static final String ULASAN_STATUS = "ulasanStatus";
+    public static final String WAKTU_ULASAN = "waktuUlasan";
+    public static final String TEXT_ULASAN = "textUlasan";
+    public static final String RATING_PRODUK = "ratingProduk";
+    public static final String RATING_PELAYANAN = "ratingPelayanan";
 }

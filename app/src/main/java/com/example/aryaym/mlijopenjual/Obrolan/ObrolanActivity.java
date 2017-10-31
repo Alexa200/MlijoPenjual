@@ -93,13 +93,13 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        namaPenerima = getIntent().getStringExtra(Constants.NAMA);
         getSupportActionBar().setTitle(namaPenerima);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
         konsumenModel = (KonsumenModel) getIntent().getSerializableExtra(Constants.KONSUMEN_MODEL);
         penerimaId = konsumenModel.getUid();
-        namaPenerima = konsumenModel.getDetailKonsumen().get(Constants.NAMA).toString();
         deviceToken = konsumenModel.getDeviceToken();
         //init
         presenter = new ObrolanPresenter(this);

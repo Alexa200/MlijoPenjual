@@ -251,6 +251,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
                         public void onClick(View v) {
                             Intent intent = new Intent(DetailTransaksiActivity.this, ObrolanActivity.class);
                             intent.putExtra(Constants.KONSUMEN_MODEL, konsumenModel);
+                            intent.putExtra(Constants.NAMA, konsumenModel.getDetailKonsumen().get(Constants.NAMA).toString());
                             startActivity(intent);
                         }
                     });
