@@ -63,28 +63,11 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         kelolaProdukAdapter = new KelolaProdukAdapter(postRefs, getActivity());
-//        mRecycler = (RecyclerView) rootView.findViewById(R.id.recycler_my_produk);
         customLinearLayoutManager = new MyLinearLayoutManager(getActivity());
         mRecycler.setLayoutManager(customLinearLayoutManager);
         mRecycler.setAdapter(kelolaProdukAdapter);
         fabNewProduk.setOnClickListener(this);
         loadData();
-//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-//
-//            if (InternetConnection.getInstance().isOnline(getActivity())) {
-//                loadData();
-//                //handleData();
-//                fabNewProduk.setVisibility(View.VISIBLE);
-//            } else {
-//                progressBar.setVisibility(View.GONE);
-//                fabNewProduk.setVisibility(View.GONE);
-//            }
-//
-//        } else {
-//            fabNewProduk.setVisibility(View.GONE);
-//            progressBar.setVisibility(View.GONE);
-//            mRecycler.setVisibility(View.VISIBLE);
-//        }
         return rootView;
     }
 
@@ -131,7 +114,14 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
 
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                                try {
+                                    PostRef postRef = dataSnapshot.getValue(PostRef.class);
+                                    int indexMyPostInList = IndexProduk(postRef);
+                                    postRefs.remove(indexMyPostInList);
+                                    kelolaProdukAdapter.notifyDataSetChanged();
+                                } catch (Exception e) {
+                                    ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.msg_retry));
+                                }
                             }
 
                             @Override
@@ -157,66 +147,14 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
                 }
             });
         } catch (Exception e) {
-           // ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.error));
+            ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.msg_retry));
+            imgNoResult.setVisibility(View.VISIBLE);
         }
     }
 
     public Query getAllPost(String uid) {
         Query query = mDatabase.child(Constants.PENJUAL).child(uid).child(Constants.PRODUK);
         return query;
-    }
-
-    private void handleData() {
-        try {
-            getAllPost(BaseActivity.getUid()).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    try {
-                        if (dataSnapshot != null) {
-                            PostRef postRef = dataSnapshot.getValue(PostRef.class);
-                            if (!postRefs.contains(postRef)) {
-                                postRefs.add(postRef);
-                                kelolaProdukAdapter.notifyDataSetChanged();
-                            }
-                        }
-                        showItemData();
-                    } catch (Exception e) {
-                        ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.msg_retry));
-                    }
-
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    try {
-                        PostRef postRef = dataSnapshot.getValue(PostRef.class);
-                        int indexMyPostInList = IndexProduk(postRef);
-                        postRefs.remove(indexMyPostInList);
-                        kelolaProdukAdapter.notifyDataSetChanged();
-                    } catch (Exception e) {
-                        ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.msg_retry));
-                    }
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    showItemData();
-                }
-            });
-        } catch (Exception e) {
-            ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.msg_retry));
-            imgNoResult.setVisibility(View.VISIBLE);
-        }
     }
 
     private int IndexProduk(PostRef postRef){
@@ -229,10 +167,6 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         }
         return index;
     }
-
-//    public void deleteProduk(String uid, String idProduk, String kategoriProduk){
-//        mDatabase.child(Constants.PENJUAL).child(uid).child(Constants.PRODUK).child(idProduk).removeValue();
-//    }
 
     @Override
     public void onClick(View v) {

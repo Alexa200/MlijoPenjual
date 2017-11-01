@@ -48,6 +48,8 @@ public class DetailUlasanActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_ulasan);
         ButterKnife.bind(this);
+        setTitle(R.string.title_activity_ulasan);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         ulasanModel = (UlasanModel) getIntent().getSerializableExtra(Constants.ULASAN);

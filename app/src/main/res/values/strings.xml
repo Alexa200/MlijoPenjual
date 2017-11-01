@@ -14,10 +14,12 @@
     <string name="title_activity_tambah_produk">Tambah Produk</string>
     <string name="title_activity_ubah_produk">Ubah Produk</string>
     <string name="title_activity_kelola_penjualan">Kelola Penjualan</string>
-    <string name="title_atur_profil">Pengaturan Profil</string>
+    <string name="title_activity_pengaturan">Pengaturan</string>
+    <string name="title_activity_kelola_profil">Pengaturan Profil</string>
     <string name="title_activity_kelola_lokasi">Kelola Lokasi Berjualan</string>
     <string name="title_activity_detail_transaksi">Detail Transaksi</string>
-    <string name="title_profil">Profil</string>
+    <string name="title_activity_ulasan">Ulasan Konsumen</string>
+    <string name="title_activity_profil">Profil</string>
     <!-- Hint -->
     <string name="hint_pengaturan">  Pengaturan  </string>
     <string name="action_settings">Settings</string>
@@ -179,9 +181,21 @@
     <!-- Data -->
     <string-array name="arrKategori">
         <item>Sayuran</item>
+        <item>Buah</item>
+        <item>Daging</item>
+        <item>Ikan dan Makanan Laut</item>
+        <item>Palawija</item>
+        <item>Bumbu Dapur</item>
+        <item>Lain - lain</item>
     </string-array>
     <string-array name="arrSatuan">
-        <item>Gram</item>
+        <item>Gram(Gr)</item>
+        <item>KiloGram(Kg)</item>
+        <item>Mililiter(ml)</item>
+        <item>Liter(L)</item>
+        <item>Buah/Butir</item>
+        <item>Lusin</item>
+        <item>Ekor</item>
     </string-array>
     <!-- Produk -->
 
@@ -213,6 +227,7 @@
     <string name="lbl_penilaian_penjual">Penilaian Penjual</string>
     <string name="lbl_kualitas_produk">Kualitas Produk</string>
     <string name="lbl_kualitas_pelayanan">Kualitas Pelayanan</string>
+    <string name="lbl_penilaian_konsumen">Penilaian Konsumen</string>
     <!-- Pesan -->
     <!-- Ulasan -->
 

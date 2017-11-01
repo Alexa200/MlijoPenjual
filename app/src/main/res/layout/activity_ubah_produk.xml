@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/grey_percent_90"
     tools:context="com.example.aryaym.mlijopenjual.KelolaProduk.UbahProdukActivity">
 
 
@@ -20,14 +21,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_margin="10dp"
                     android:textStyle="bold"
                     android:text="Nama Produk"/>
 
@@ -41,9 +43,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:layout_margin="3dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <TextView
@@ -56,35 +58,38 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:weightSum="2">
                     <TextView
                         android:id="@+id/input_kategori_view"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
                         android:layout_weight="1"/>
 
                     <Spinner
                         android:id="@+id/input_kategori"
                         android:hint="kategori"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"></Spinner>
+                        android:layout_weight="1"
+                        android:gravity="end"></Spinner>
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
                     android:textStyle="bold"
                     android:text="Pilih Gambar Produk"/>
 
@@ -119,44 +124,150 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:textStyle="bold"
                     android:text="Detail Produk"/>
-
-                <include
-                    android:id="@+id/detail_produk_layout"
-                    layout="@layout/include_detail_produk_ubah"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@android:color/darker_gray" />
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true" />
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="5dp"
+                        android:paddingLeft="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:weightSum="6">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:layout_weight="2"
+                            android:text="Harga Produk :"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:gravity="end|center"
+                            android:layout_weight="1"
+                            android:text="Rp. "/>
+                        <EditText
+                            android:id="@+id/input_harga_produk"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:paddingRight="5dp"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical"
+                            android:inputType="numberDecimal"
+                            android:hint="Input Harga Produk"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="5dp"
+                        android:paddingLeft="5dp"
+                        android:weightSum="7">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:layout_weight="2.5"
+                            android:text="Satuan Produk :"/>
+                        <EditText
+                            android:id="@+id/nominal_satuan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1.5"
+                            android:inputType="number"/>
+                        <TextView
+                            android:id="@+id/nama_satuan_view"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"/>
+                        <Spinner
+                            android:id="@+id/nama_satuan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"></Spinner>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:paddingBottom="100dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Deskripsi Produk"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.4dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/deskripsiProduk"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:hint="Input deskripsi produk"
+                            android:textAlignment="viewStart"
+                            android:inputType="textMultiLine"
+                            android:maxLines="10"
+                            android:scrollHorizontally="true"/>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/btn_simpan"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Simpan"/>
+                    android:background="@color/colorPrimary"
+                    android:text="Simpan"
+                    android:textColor="@color/white"/>
 
                 <Button
                     android:id="@+id/btn_batal"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Batal"/>
+                    android:background="@color/md_red_600"
+                    android:text="Batal"
+                    android:textColor="@color/white"/>
             </LinearLayout>
 
         </LinearLayout>

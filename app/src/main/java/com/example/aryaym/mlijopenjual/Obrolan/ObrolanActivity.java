@@ -103,7 +103,7 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         deviceToken = konsumenModel.getDeviceToken();
         //init
         presenter = new ObrolanPresenter(this);
-        obrolanAdapter = new ObrolanAdapter(this, obrolanList, konsumenModel.getAvatar());
+        obrolanAdapter = new ObrolanAdapter(this, obrolanList, konsumenModel.getDetailKonsumen().get(Constants.AVATAR).toString());
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerChat.setLayoutManager(linearLayoutManager);
         recyclerChat.setAdapter(obrolanAdapter);

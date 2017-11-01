@@ -41,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -222,8 +223,7 @@ private NavigationView navigationView;
                 transaction.replace(R.id.main_fragment_container, kelolaPenjualanFragment).commit();
                 break;
             case R.id.info_harga:
-//                Intent intentHarga = new Intent(this, InformasiHargaActivity.class);
-//                startActivity(intentHarga);
+                infoHarga();
                 break;
             case R.id.pesan:
                 DaftarObrolanFragment daftarObrolanFragment = new DaftarObrolanFragment();
@@ -267,6 +267,18 @@ private NavigationView navigationView;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void infoHarga(){
+        new FinestWebView.Builder(this).titleDefault("Informasi Harga")
+                .updateTitleFromHtml(false)
+                .statusBarColorRes(R.color.colorPrimaryDark)
+                .toolbarColorRes(R.color.colorPrimary)
+                .titleColorRes(R.color.finestWhite)
+                .urlColorRes(R.color.finestWhite)
+                .iconDefaultColorRes(R.color.finestWhite)
+                .progressBarColorRes(R.color.finestWhite)
+                .show("http://siskaperbapo.com/harga/tabel");
     }
 
     private void logOut(){

@@ -49,7 +49,7 @@ public class DaftarUlasanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_daftar_ulasan, container, false);
-        getActivity().setTitle("Ulasan");
+        getActivity().setTitle(R.string.title_activity_ulasan);
         unbinder = ButterKnife.bind(this, view);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         loadDataPenjual();

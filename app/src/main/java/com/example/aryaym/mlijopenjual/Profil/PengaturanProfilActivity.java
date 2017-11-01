@@ -89,6 +89,8 @@ public class PengaturanProfilActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pengaturan_profil);
+        setTitle(R.string.title_activity_kelola_profil);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();

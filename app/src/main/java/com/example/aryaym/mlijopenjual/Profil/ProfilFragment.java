@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
@@ -44,6 +45,10 @@ public class ProfilFragment extends Fragment {
     @BindView(R.id.txt_alamat_lengkap)
     TextView txtAlamat;
     Unbinder unbinder;
+    @BindView(R.id.rb_kualitas_produk)
+    RatingBar rbKualitasProduk;
+    @BindView(R.id.rb_kualitas_pelayanan)
+    RatingBar rbKualitasPelayanan;
 
     private PenjualModel penjualModel;
     private DatabaseReference mDatabase;
@@ -66,11 +71,12 @@ public class ProfilFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle(R.string.title_profil);
+        getActivity().setTitle(R.string.title_activity_profil);
         final View view = inflater.inflate(R.layout.fragment_profil, container, false);
         unbinder = ButterKnife.bind(this, view);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         loadData();
+        getRatingPenjual();
         btnPengaturan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,23 +88,48 @@ public class ProfilFragment extends Fragment {
 
     }
 
-    private void loadData(){
+    private void loadData() {
 
         mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
-                if (penjualModel != null){
+                if (penjualModel != null) {
                     try {
                         txtHeaderName.setText(penjualModel.getDetailPenjual().get(Constants.NAMA).toString());
                         txtEmail.setText(penjualModel.getEmail());
                         txtNomorTelp.setText(penjualModel.getDetailPenjual().get(Constants.TELPON).toString());
                         txtAlamat.setText(penjualModel.getDetailPenjual().get(Constants.ALAMAT).toString());
                         ImageLoader.getInstance().loadImageAvatar(ProfilFragment.this.getActivity(), penjualModel.getDetailPenjual().get(Constants.AVATAR).toString(), imgAvatar);
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getRatingPenjual() {
+        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.ULASAN).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                float totalRatingProduk = 0, totalRatingPelayanan = 0;
+                int count = 0;
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    float ratingProduk = data.child(Constants.RATING_PRODUK).getValue(float.class);
+                    totalRatingProduk = totalRatingProduk + ratingProduk;
+
+                    float ratingPelayanan = data.child(Constants.RATING_PELAYANAN).getValue(float.class);
+                    totalRatingPelayanan = totalRatingPelayanan + ratingPelayanan;
+                    count = count + 1;
+                }
+                rbKualitasProduk.setRating(totalRatingProduk / count);
+                rbKualitasPelayanan.setRating(totalRatingPelayanan / count);
             }
 
             @Override

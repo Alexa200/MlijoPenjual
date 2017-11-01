@@ -65,15 +65,12 @@ public class KelolaPenjualanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle(R.string.title_atur_profil);
-        //ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
+        getActivity().setTitle(R.string.title_activity_kelola_penjualan);
         View view = inflater.inflate(R.layout.fragment_kelola_penjualan, container, false);
         unbinder = ButterKnife.bind(this, view);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         loadData();
-        //getData();
         pesananBaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,22 +120,6 @@ public class KelolaPenjualanFragment extends Fragment {
             }
         });
     }
-
-//    private void getData(){
-//        Query query = mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PENJUALAN).child(Constants.PENJUALAN_BARU).orderByChild(Constants.STATUS_TRANSAKSI).equalTo(2);
-//        query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                long order = dataSnapshot.getChildrenCount();
-//                jmlRiwayatTransaksi.setText(Long.toString(order));
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
 
     @Override
     public void onAttach(Context context) {

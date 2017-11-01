@@ -26,6 +26,7 @@ public class Constants {
     public static final String DEVICE_TOKEN = "deviceToken";
     public static final String ALAMAT = "alamat";
     public static final String ALAMAT_USER = "alamatUser";
+    public static final String STATUS_BERJUALAN = "statusBerjualan";
     public static final String STATUS_LOKASI = "statusLokasi";
     public static final String INFO_KATEGORI = "infoKategori";
     public static final String INFO_LOKASI = "infoLokasi";

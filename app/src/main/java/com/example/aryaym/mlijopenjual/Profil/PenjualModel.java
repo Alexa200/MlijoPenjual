@@ -19,7 +19,7 @@ public class PenjualModel implements Serializable{
     private String alamat;
     private String judulAlamat;
     private String alamatId;
-    private boolean statusLokasi;
+    private boolean statusLokasi, statusBerjualan;
     private String namaPenerima;
     private Map<String, Object> infoKategori;
     private Map<String, Object> infoLokasi;
@@ -134,5 +134,9 @@ public class PenjualModel implements Serializable{
 
     public boolean isStatusLokasi() {
         return statusLokasi;
+    }
+
+    public boolean isStatusBerjualan() {
+        return statusBerjualan;
     }
 }

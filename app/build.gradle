@@ -24,9 +24,11 @@ repositories {
     maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
     maven { url "https://jitpack.io" }
 
+    google()
 }
 
 dependencies {
+    implementation 'com.android.support:support-v4:25.4.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -55,12 +57,13 @@ dependencies {
     compile 'com.firebase:geofire-android:2.1.2'
     compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.google.android.gms:play-services:11.0.4'
-
+    compile 'com.thefinestartist:finestwebview:1.2.7'
 
     compile 'de.hdodenhof:circleimageview:2.1.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
+
 
 
 
