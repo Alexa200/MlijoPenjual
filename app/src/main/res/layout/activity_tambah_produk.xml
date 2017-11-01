@@ -75,6 +75,12 @@
                     android:layout_marginLeft="10dp"
                     android:textStyle="bold"
                     android:text="Pilih Gambar Produk"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="10sp"
+                    android:text="@string/msg_upload_gambar"/>
 
                 <HorizontalScrollView
                     android:scrollbarSize="1dp"

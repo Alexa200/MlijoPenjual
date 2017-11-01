@@ -178,6 +178,7 @@
     <string name="lbl_satuan_produk">Satuan Produk</string>
     <!-- Pesan -->
     <string name="msg_hapusProduk">Apakah anda yakin akan menghapus produk tersebut?</string>
+    <string name="msg_upload_gambar">(Harap memilih gambar dengan bijak, karena gambar tidak dapat diubah setelah terupload)</string>
     <!-- Data -->
     <string-array name="arrKategori">
         <item>Sayuran</item>

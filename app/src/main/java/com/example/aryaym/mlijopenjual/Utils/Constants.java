@@ -59,6 +59,7 @@ public class Constants {
     public static final String NAMASATUAN = "namaSatuan";
     public static final String ID_PRODUK ="idProduk";
     public static final String DESKRIPSI ="deskripsiProduk";
+    public static final String WAKTU_DIBUAT ="waktuDibuat";
     //Pesan Produk
     public static final String PENJUALAN = "penjualan";
     public static final String PENJUALAN_BARU = "penjualanBaru";

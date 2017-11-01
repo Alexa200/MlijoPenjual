@@ -1,27 +1,71 @@
 {
   "project_info": {
-    "project_number": "669127537700",
-    "firebase_url": "https://mlijo-5640f.firebaseio.com",
-    "project_id": "mlijo-5640f",
-    "storage_bucket": "mlijo-5640f.appspot.com"
+    "project_number": "288063055364",
+    "firebase_url": "https://mlijo-apps.firebaseio.com",
+    "project_id": "mlijo-apps",
+    "storage_bucket": "mlijo-apps.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:669127537700:android:1c79edfae09a24fd",
+        "mobilesdk_app_id": "1:288063055364:android:ab396afc18b67a3d",
+        "android_client_info": {
+          "package_name": "com.example.aryaym.mlijokonsumen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288063055364-icdmrkghkvtjgor5o9kqf80f659si11f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aryaym.mlijokonsumen",
+            "certificate_hash": "e24aee543ad712632d44166a6fdebaa11c6dcc00"
+          }
+        },
+        {
+          "client_id": "288063055364-t66qi7ikj1s7us1bis34dhfd5p45ic9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeQnrteCJnOLPykSPg6FZHEE2xL3sGQ9Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288063055364-t66qi7ikj1s7us1bis34dhfd5p45ic9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288063055364:android:1c79edfae09a24fd",
         "android_client_info": {
           "package_name": "com.example.aryaym.mlijopenjual"
         }
       },
       "oauth_client": [
         {
-          "client_id": "669127537700-59f7ccmp8eekpr7ok78a16lb24mvvdsl.apps.googleusercontent.com",
+          "client_id": "288063055364-t66qi7ikj1s7us1bis34dhfd5p45ic9t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCdGRWN5J1J87yJxa3k38EQdVkWHabsrdI"
+          "current_key": "AIzaSyDeQnrteCJnOLPykSPg6FZHEE2xL3sGQ9Y"
         }
       ],
       "services": {

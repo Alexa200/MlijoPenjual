@@ -7,9 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,21 +20,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UbahProdukActivity extends BaseActivity {
+public class UbahProdukActivity extends BaseActivity implements View.OnClickListener{
 
     @BindView(R.id.input_nama_produk)
     EditText inputNamaProduk;
-    @BindView(R.id.input_kategori)
-    Spinner spnKategoriProduk;
-    @BindView(R.id.photoContainer)
-    LinearLayout photoContainer;
-    @BindView(R.id.btn_upload)
-    ImageButton btnUpload;
-    @BindView(R.id.imageContainer)
-    HorizontalScrollView imageContainer;
     @BindView(R.id.input_harga_produk)
     EditText inputHargaProduk;
     @BindView(R.id.nominal_satuan)
@@ -50,14 +42,15 @@ public class UbahProdukActivity extends BaseActivity {
     Button btnBatal;
     @BindView(R.id.deskripsiProduk)
     EditText inputDeskripsiProduk;
-    @BindView(R.id.input_kategori_view)
-    TextView inputKategoriView;
     @BindView(R.id.nama_satuan_view)
     TextView namaSatuanView;
 
     private ProdukModel produkModel;
     private DatabaseReference mDatabase;
-    private ArrayAdapter<String> spinnerKategoriAdapter, spinnerSatuanAdapter;
+    private ArrayAdapter<String> spinnerSatuanAdapter;
+    private String namaSatuan;
+    private String namaProduk,  satuanProduk, deskripsiProduk;
+    private Double hargaProduk;
     private boolean isSpinnerTouched = false;
 
     @Override
@@ -74,39 +67,11 @@ public class UbahProdukActivity extends BaseActivity {
         produkModel = (ProdukModel) getIntent().getSerializableExtra(Constants.PRODUK);
         loadData();
         spinnerData();
+        btnSimpan.setOnClickListener(this);
+        btnBatal.setOnClickListener(this);
     }
 
     private void spinnerData() {
-        //spinnerKategori
-        spinnerKategoriAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.arrKategori));
-        spinnerKategoriAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spnKategoriProduk.setAdapter(spinnerKategoriAdapter);
-        spnKategoriProduk.setSelected(false);
-        spnKategoriProduk.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                isSpinnerTouched = true;
-                return false;
-            }
-        });
-        spnKategoriProduk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!isSpinnerTouched) {
-                    ((TextView) view).setText(null);
-                } else {
-                    ((TextView) view).setText(null);
-                    inputKategoriView.setText(spnKategoriProduk.getSelectedItem().toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
         //spinnerSatuan
         spinnerSatuanAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.arrSatuan));
@@ -147,7 +112,6 @@ public class UbahProdukActivity extends BaseActivity {
                         ProdukModel produkModel = dataSnapshot.getValue(ProdukModel.class);
                         if (produkModel != null) {
                             inputNamaProduk.setText(produkModel.getNamaProduk());
-                            inputKategoriView.setText(produkModel.getKategoriProduk());
                             //image
                             inputHargaProduk.setText(rupiah().format(produkModel.getHargaProduk()) );
                             inputNominalSatuan.setText(produkModel.getSatuanProduk());
@@ -164,6 +128,38 @@ public class UbahProdukActivity extends BaseActivity {
             });
         } catch (Exception e) {
             ShowSnackbar.showSnack(this, "error");
+        }
+    }
+
+    private void perbaruiProduk(){
+        namaProduk = inputNamaProduk.getText().toString();
+        hargaProduk = Double.parseDouble(inputHargaProduk.getText().toString());
+        satuanProduk = inputNominalSatuan.getText().toString() ;
+        deskripsiProduk = inputDeskripsiProduk.getText().toString();
+        namaSatuan = namaSatuanView.getText().toString();
+        simpanProduk(namaProduk, hargaProduk, satuanProduk, deskripsiProduk, namaSatuan);
+    }
+
+    private void simpanProduk(String namaProduk, Double hargaProduk, String satuanProduk, String deskripsiProduk, String namaSatuan){
+        long waktuDibuat = new Date().getTime();
+        HashMap<String, Object> dataProduk = new HashMap<>();
+        dataProduk.put(Constants.WAKTU_DIBUAT, waktuDibuat);
+        dataProduk.put(Constants.NAMAPRODUK, namaProduk);
+        dataProduk.put(Constants.HARGAPRODUK, hargaProduk);
+        dataProduk.put(Constants.DIGITSATUAN, satuanProduk);
+        dataProduk.put(Constants.NAMASATUAN, namaSatuan);
+        dataProduk.put(Constants.DESKRIPSI, deskripsiProduk);
+        mDatabase.child(Constants.PRODUK_REGULER).child(produkModel.getKategoriProduk()).child(produkModel.getIdProduk()).updateChildren(dataProduk);
+        showProgessDialog();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btnSimpan){
+            perbaruiProduk();
+            finish();
+        }else if (v == btnBatal){
+
         }
     }
 }

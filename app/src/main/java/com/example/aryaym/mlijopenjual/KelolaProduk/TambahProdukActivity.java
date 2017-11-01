@@ -35,6 +35,7 @@ import com.gun0912.tedpicker.Config;
 import com.gun0912.tedpicker.ImagePickerActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -231,109 +232,6 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
         return result;
     }
 
-//    private void submitPost() {
-//        namaProduk = inputNamaProduk.getText().toString();
-//        hargaProduk = Double.parseDouble(inputHargaProduk.getText().toString());
-//        satuanProduk = inputNominalSatuan.getText().toString() ;
-//        deskripsiProduk = inputDeskripsiProduk.getText().toString();
-//
-//        //mDatabase.
-//        final String userId = getUid();
-//        mDatabase.child(Constants.PENJUAL).child(userId).addListenerForSingleValueEvent(
-//                new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        // Get user value
-//                        PenjualModel user = dataSnapshot.getValue(PenjualModel.class);
-//
-//                        // [START_EXCLUDE]
-//                        if (user == null) {
-//                            // PenjualModel is null, error out
-//                            Log.e(TAG, "PenjualModel " + userId + " is unexpectedly null");
-//                            Toast.makeText(TambahProdukActivity.this,
-//                                    "Error: could not fetch user.",
-//                                    Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            // Write new post
-//                            buatProdukBaru(userId, namaProduk, kategoriProduk, hargaProduk, satuanProduk, namaSatuan, deskripsiProduk);
-//                          //  tambahPemilikProduk(idProduk, kategoriProduk);
-//                        }
-//
-//                        // Finish this Activity, back to the stream
-//                       // setEditingEnabled(true);
-//                        finish();
-//                        // [END_EXCLUDE]
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-//                        // [START_EXCLUDE]
-//                       // setEditingEnabled(true);
-//                        // [END_EXCLUDE]
-//                    }
-//                });
-//        // [END single_value_read]
-//    }
-//
-//    private void buatProdukBaru(final String userId, final String namaProduk, final String kategoriProduk, final Double hargaProduk, final String satuanProduk, final String namaSatuan, final String deskripsiProduk) {
-//        final String key = mDatabase.child(Constants.PRODUK).push().getKey();
-//        final String idProduk = key;
-//        final ArrayList<String> imgURL = new ArrayList<String>();
-//        final CountDownLatch uploadDone = new CountDownLatch(listImage.size()); //Multi thread sync
-//        totalImage = 0;
-//        for (int img=0; img<listImage.size(); img++){
-//            String filepath = String.valueOf(listImage.get(img));
-//            Uri file = Uri.fromFile(new File(filepath));
-//            StorageReference imageRef = mFirebaseStorage.child(Constants.IMAGES).child(idProduk);
-//            UploadTask uploadTask = imageRef.child(System.currentTimeMillis() + "." +
-//                    MimeTypeMap.getFileExtensionFromUrl(file.getLastPathSegment())).putFile(file);
-//
-//            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-////                    System.out.println("Upload is " + progress + "% done");
-//                        mProgressDialog.setMessage("" + (totalImage + 1) + "/" +
-//                        listImage.size() + " " + progress + "%");
-//                }
-//            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
-//                    System.out.println("Upload is paused");
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    uploadDone.countDown();
-//                }
-//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    // Handle successful uploads on complete
-//                    uploadDone.countDown();
-//                    imgURL.add(taskSnapshot.getDownloadUrl().toString());
-//
-//                    if (totalImage ==(listImage.size() - 1)){
-//                        ArrayList<String> imgProduk = imgURL;
-//                        ProdukModel produkModel = new ProdukModel(userId, namaProduk, kategoriProduk, imgProduk, hargaProduk, satuanProduk, namaSatuan, deskripsiProduk, idProduk);
-//                        Map<String, Object> postValues = produkModel.toProduk();
-//
-//                        mDatabase.child(Constants.PRODUK).child(kategoriProduk).child(key).setValue(postValues);
-//                    }
-//                    totalImage +=1;
-//                }
-//            });
-//        }
-//        //Wait until upload images done!
-//      //  uploadDone.await();
-//        ProdukModel produkModel = new ProdukModel(idProduk, kategoriProduk);
-//        Map<String, Object> postValues = produkModel.toPenjual();
-//
-//        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PRODUK).child(idProduk).setValue(postValues);
-//
-//    }
-
     private void submitPost(){
       //  final ProdukModel produkModel = new ProdukModel();
         namaProduk = inputNamaProduk.getText().toString();
@@ -342,71 +240,15 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
         deskripsiProduk = inputDeskripsiProduk.getText().toString();
 
         buatProdukBaru(namaProduk, hargaProduk, satuanProduk, deskripsiProduk);
-//        UploadPhotoThreadListener uploadPhotoThreadListener = new UploadPhotoThreadListener() {
-//            @Override
-//            public void onUploadPhotoSuccess(ArrayList<String> photoUrls) {
-//                Map<String, Object> updateImage = new HashMap<>();
-//                updateImage.put(Constants.IMAGES, photoUrls);
-//                mDatabase.child(Constants.PRODUK).child(kategoriProduk).child(ProdukModel).updateChildren(updateImage);
-//
-//                tambahProdukPenjual();
-//            }
-//        };
-//        new UploadPhotoThread(produk.getIdProduk(), listImage, uploadPhotoThreadListener).execute();
-
-        // Finish this Activity, back to the stream
-
-//        for (int img=0; img<listImage.size(); img++){
-//            String filepath = String.valueOf(listImage.get(img));
-//            Uri file = Uri.fromFile(new File(filepath));
-//            StorageReference imageRef = mFirebaseStorage.child(Constants.IMAGES).child(produk.getIdProduk());
-//            UploadTask uploadTask = imageRef.child(System.currentTimeMillis() + "." +
-//                    MimeTypeMap.getFileExtensionFromUrl(file.getLastPathSegment())).putFile(file);
-//
-//            uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-////                    System.out.println("Upload is " + progress + "% done");
-//                        mProgressDialog.setMessage("" + (totalImage + 1) + "/" +
-//                        listImage.size() + " " + progress + "%");
-//                }
-//            }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
-//                    System.out.println("Upload is paused");
-//                }
-//            }).addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception e) {
-//                    uploadDone.countDown();
-//                }
-//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    // Handle successful uploads on complete
-//                    uploadDone.countDown();
-//                    imgURL.add(taskSnapshot.getDownloadUrl().toString());
-//
-//                    if (totalImage ==(listImage.size() - 1)){
-//                        ArrayList<String> imgUri = imgURL;
-//                        //ProdukModel produkModel = new ProdukModel(userId, namaProduk, kategoriProduk, imgProduk, hargaProduk, satuanProduk, namaSatuan, deskripsiProduk, idProduk);
-//                        Map<String, Object> postValues = new HashMap<>();
-//                        postValues.put(Constants.IMAGES, imgUri);
-//                        mDatabase.child(Constants.PRODUK).child(kategoriProduk).child(produk.getIdProduk()).setValue(postValues);
-//                    }
-//                    totalImage +=1;
-//                }
-//            });
-//        }
-
     }
 
     private void buatProdukBaru(String namaProduk, Double hargaProduk, String satuanProduk, String deskripsiProduk){
+        long waktuDibuat = new Date().getTime();
         String pushId = mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).push().getKey();
         final String idProduk = pushId;
         HashMap<String, Object> dataProduk = new HashMap<>();
         dataProduk.put(Constants.ID_PENJUAL, getUid());
+        dataProduk.put(Constants.WAKTU_DIBUAT, waktuDibuat);
         dataProduk.put(Constants.NAMAPRODUK, namaProduk);
         dataProduk.put(Constants.ID_KATEGORI, kategoriProduk);
         dataProduk.put(Constants.HARGAPRODUK, hargaProduk);
