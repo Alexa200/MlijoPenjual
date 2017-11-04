@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.aryaym.mlijopenjual.Base.ImageLoader;
+import com.example.aryaym.mlijopenjual.InformasiKonsumen.KonsumenModel;
 import com.example.aryaym.mlijopenjual.KelolaProduk.ProdukModel;
-import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.example.aryaym.mlijopenjual.Utils.DateFormatter;
@@ -80,12 +80,12 @@ public class ListTransaksiAdapter extends RecyclerView.Adapter<ListTransaksiView
         }
 
 
-        mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdPembeli()).child(Constants.ALAMAT_USER).addValueEventListener(new ValueEventListener() {
+        mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdKonsumen()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                PenjualModel penjualModel = dataSnapshot.getValue(PenjualModel.class);
-                if (penjualModel != null) {
-                    holder.txtAlamatKonsumen.setText(penjualModel.getAlamat());
+                final KonsumenModel konsumenModel = dataSnapshot.getValue(KonsumenModel.class);
+                if (konsumenModel != null) {
+                    holder.txtAlamatKonsumen.setText(konsumenModel.getDetailKonsumen().get(Constants.ALAMAT).toString());
                 }
             }
 

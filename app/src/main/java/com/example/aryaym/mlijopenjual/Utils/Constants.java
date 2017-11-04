@@ -73,7 +73,7 @@ public class Constants {
     //Transaksi
     public static final String TIPE_TRANSAKSI = "tipeTransaksi";
     public static final String TRANSAKSI = "transaksi";
-    public static final String ID_PEMBELI = "idPembeli";
+    public static final String ID_KONSUMEN = "idKonsumen";
     public static final String ID_PEMESANAN = "idPemesanan";
     public static final String NOTE_KONSUMEN = "catatatanKonsumen";
     public static final String JUMLAH_PRODUK = "jumlahProduk";

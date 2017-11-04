@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class TransaksiModel implements Serializable {
 
-    String idPemesanan, idPembeli, idPenjual, idProduk, idKategori, catatanKonsumen, penerima, tipeTransaksi;
+    String idPemesanan, idKonsumen, idPenjual, idProduk, idKategori, catatanKonsumen, penerima, tipeTransaksi;
     Double totalHarga, biayaKirim;
     long tanggalPesan;
     int statusTransaksi, jumlahProduk;
@@ -43,8 +43,8 @@ public class TransaksiModel implements Serializable {
         this.idPenjual = idPenjual;
     }
 
-    public String getIdPembeli() {
-        return idPembeli;
+    public String getIdKonsumen() {
+        return idKonsumen;
     }
 
     public String getIdProduk() {
