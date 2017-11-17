@@ -30,8 +30,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Autentifikasi.AutentifikasiTeleponActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".Autentifikasi.AutentifikasiActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Autentifikasi.ResetPasswordActivity" />
         <activity
             android:name=".MainActivity"
@@ -42,7 +47,8 @@
             android:name="com.gun0912.tedpicker.ImagePickerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".KelolaProduk.DetailProdukActivity" />
+        <activity android:name=".KelolaProduk.DetailProdukActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".Service.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -50,12 +56,18 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".KelolaProduk.UbahProdukActivity" />
-        <activity android:name=".Profil.PengaturanProfilActivity" />
-        <activity android:name=".Profil.KelolaLokasiActivity" />
-        <activity android:name=".KelolaPenjualan.ListTransaksiActivity" />
-        <activity android:name=".KelolaPenjualan.DetailTransaksiActivity" />
-        <activity android:name=".Obrolan.ObrolanActivity" />
+        <activity android:name=".KelolaProduk.UbahProdukActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Profil.PengaturanProfilActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Profil.KelolaLokasiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".KelolaPenjualan.ListTransaksiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".KelolaPenjualan.DetailTransaksiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Obrolan.ObrolanActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Obrolan.TampilGambarActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -65,7 +77,9 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Autentifikasi.DataUserBaruActivity" />
+        <activity android:name=".Autentifikasi.DataUserBaruActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".InformasiKonsumen.LokasiKonsumenActivity"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"

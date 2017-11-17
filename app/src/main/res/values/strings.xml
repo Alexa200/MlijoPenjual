@@ -38,6 +38,9 @@
     <string name="msg_confirmLogOut">Apakah anda yakin akan logout?</string>
     <string name="msg_keluarAplikasi">Apakah anda ingin keluar aplikasi?</string>
     <string name="msg_tidak_boleh_kosong">Anda harus mengisi Form yang tersedia !</string>
+    <string name="msg_input_kode_verifikasi">SMS verifikasi telah dikirim ke nomor Anda yang terdaftar.
+        Harap masukan kode yang tertera pada sms ke dalam kolom di bawah.
+        Ulangi kirim kode apabila dalam 60 detik tidak ada sms masuk</string>
     <!-- Label Lokasi -->
     <string name="permission_rationale">Location permission is needed for core functionality</string>
     <string name="permission_denied_explanation">Permission was denied, but is needed for core functionality.</string>

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.aryaym.mlijopenjual.Autentifikasi.AutentifikasiActivity;
+import com.example.aryaym.mlijopenjual.Autentifikasi.AutentifikasiTeleponActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -39,12 +39,8 @@ public class SplashScreen extends Activity{
                 if (auth.getCurrentUser()!=null){
                     startActivity(new Intent(SplashScreen.this,MainActivity.class));
                 }else {
-                    startActivity(new Intent(SplashScreen.this,AutentifikasiActivity.class));
+                    startActivity(new Intent(SplashScreen.this,AutentifikasiTeleponActivity.class));
                 }
-//                Intent i = new Intent(SplashScreen.this, AutentifikasiActivity.class);
-//                startActivity(i);
-
-                // close this activity
                 finish();
             }
         }, SPLASH_TIME_OUT);

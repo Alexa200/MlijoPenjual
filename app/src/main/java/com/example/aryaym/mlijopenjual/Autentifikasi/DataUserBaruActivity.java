@@ -34,6 +34,7 @@ public class DataUserBaruActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.btn_submit)
     Button btnSubmit;
 
+    private String phoneNumber;
     private DatabaseReference mDatabase;
 
     @Override
@@ -42,6 +43,8 @@ public class DataUserBaruActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_data_user_baru);
         ButterKnife.bind(this);
 
+        phoneNumber = getIntent().getStringExtra(Constants.TELPON);
+        inputTelepon.setText(phoneNumber);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         btnSubmit.setOnClickListener(this);
     }

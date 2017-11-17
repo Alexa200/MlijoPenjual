@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.aryaym.mlijopenjual.Autentifikasi.AutentifikasiActivity;
+import com.example.aryaym.mlijopenjual.Autentifikasi.AutentifikasiTeleponActivity;
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.Base.DeviceToken;
 import com.example.aryaym.mlijopenjual.Base.ImageLoader;
@@ -123,8 +123,8 @@ private NavigationView navigationView;
                 if (penjualModel != null) {
                     try {
                         txtUsername.setText(penjualModel.getDetailPenjual().get(Constants.NAMA).toString());
-                        txtUserEmail.setText(penjualModel.getEmail());
                         ImageLoader.getInstance().loadImageAvatar(MainActivity.this, penjualModel.getDetailPenjual().get(Constants.AVATAR).toString(), imgAvatar);
+                        txtUserEmail.setText(penjualModel.getEmail());
                     }catch (Exception e){
 
                     }
@@ -283,7 +283,7 @@ private NavigationView navigationView;
 
     private void logOut(){
         FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(this, AutentifikasiActivity.class);
+        Intent intent = new Intent(this, AutentifikasiTeleponActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
