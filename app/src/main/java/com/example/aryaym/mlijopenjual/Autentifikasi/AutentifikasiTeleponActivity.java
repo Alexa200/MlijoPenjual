@@ -138,7 +138,7 @@ public class AutentifikasiTeleponActivity extends AppCompatActivity implements V
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(AutentifikasiTeleponActivity.this, "berhasil login", Toast.LENGTH_SHORT).show();
-                            mDatabase.child(Constants.KONSUMEN).child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                            mDatabase.child(Constants.PENJUAL).child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot != null) {

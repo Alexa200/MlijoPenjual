@@ -87,5 +87,7 @@ public class DataUserBaruActivity extends BaseActivity implements View.OnClickLi
         detailPenjualData.put(Constants.TELPON, Telpon);
         mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.DETAIL_PENJUAL).setValue(detailPenjualData);
         mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.STATUS_BERJUALAN).setValue(false);
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.STATUS_LOKASI).setValue(false);
+        mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.UID).setValue(getUid());
     }
 }
