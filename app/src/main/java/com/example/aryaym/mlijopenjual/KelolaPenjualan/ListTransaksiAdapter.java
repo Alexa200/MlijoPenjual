@@ -55,6 +55,8 @@ public class ListTransaksiAdapter extends RecyclerView.Adapter<ListTransaksiView
 //        }
         holder.txtTanggalTransaksi.setText(DateFormatter.formatDateByYMD(transaksiModel.getTanggalPesan()));
         holder.txtJmlProduk.setText("Jumlah :" + " " + String.valueOf(transaksiModel.getJumlahProduk()));
+        holder.txtTanggalKirim.setText(transaksiModel.getTanggalKirim());
+        holder.txtWaktuKirim.setText(transaksiModel.getWaktuKirim());
     //    holder.txtStatusTransaksi.setText(String.valueOf(transaksiModel.getStatusTransaksi()) );
         if (transaksiModel.getStatusTransaksi() == 1){
             holder.txtStatusTransaksi.setTextColor(Color.RED);

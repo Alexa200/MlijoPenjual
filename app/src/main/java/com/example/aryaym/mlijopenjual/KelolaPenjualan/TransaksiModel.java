@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class TransaksiModel implements Serializable {
 
-    String idPemesanan, idKonsumen, idPenjual, idProduk, idKategori, catatanKonsumen, penerima, tipeTransaksi;
+    String idPemesanan, idKonsumen, idPenjual, idProduk, idKategori, catatanKonsumen, penerima, tipeTransaksi, tanggalKirim, waktuKirim;
     Double totalHarga, biayaKirim;
     long tanggalPesan;
     int statusTransaksi, jumlahProduk;
@@ -85,5 +85,13 @@ public class TransaksiModel implements Serializable {
 
     public String getTipeTransaksi() {
         return tipeTransaksi;
+    }
+
+    public String getTanggalKirim() {
+        return tanggalKirim;
+    }
+
+    public String getWaktuKirim() {
+        return waktuKirim;
     }
 }

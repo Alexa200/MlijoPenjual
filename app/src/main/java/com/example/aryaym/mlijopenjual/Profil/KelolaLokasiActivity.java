@@ -131,27 +131,6 @@ public class KelolaLokasiActivity extends BaseActivity
         txtJamMulai.setOnClickListener(this);
         txtJamSelesai.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
-
-        switchLokasi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
-                    mService.removeLocationUpdates();
-                    disableStatusLokasiPenjual();
-                    txtStatus.setText("non-Aktif");
-                } else if (isChecked) {
-                    if (!checkPermissions()) {
-                        requestPermissions();
-                    } else {
-                        mService.requestLocationUpdates();
-                        enableStatusLokasiPenjual(lat, lon);
-                    }
-                    txtStatus.setText("Aktif");
-                }
-            }
-        });
-        bindService(new Intent(this, LocationUpdatesService.class), mServiceConnection,
-                Context.BIND_AUTO_CREATE);
     }
 
     private void ambilData(){
@@ -372,6 +351,42 @@ public class KelolaLokasiActivity extends BaseActivity
         geoFire.removeLocation(getUid());
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        PreferenceManager.getDefaultSharedPreferences(this)
+//                .registerOnSharedPreferenceChangeListener(this);
+        // Restore the state of the buttons when the activity (re)launches.
+        //setButtonsState(Utils.requestingLocationUpdates(this));
+
+        switchLokasi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    mService.removeLocationUpdates();
+                    disableStatusLokasiPenjual();
+                    txtStatus.setText("non-Aktif");
+                } else if (isChecked) {
+                    if (!checkPermissions()) {
+                        requestPermissions();
+                    } else {
+                        mService.requestLocationUpdates();
+                        enableStatusLokasiPenjual(lat, lon);
+                    }
+                    txtStatus.setText("Aktif");
+                }
+            }
+        });
+        bindService(new Intent(this, LocationUpdatesService.class), mServiceConnection,
+                Context.BIND_AUTO_CREATE);
+
+
+        // Bind to the service. If the service is in foreground mode, this signals to the service
+        // that since this activity is in the foreground, the service can exit foreground mode.
+//        bindService(new Intent(this, LocationUpdatesService.class), mServiceConnection,
+//                Context.BIND_AUTO_CREATE);
+    }
 
     @Override
     protected void onResume() {

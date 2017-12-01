@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
-            android:text="Pilih area Kecamatan anda berjualan"/>
+            android:hint="Pilih area Kecamatan anda berjualan"/>
 
         <TextView
             android:layout_width="match_parent"

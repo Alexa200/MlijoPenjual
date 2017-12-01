@@ -138,7 +138,7 @@ public class LocationUpdatesService extends Service {
         };
 
         createLocationRequest();
-        getLastLocation();
+        //getLastLocation();
 
         HandlerThread handlerThread = new HandlerThread(TAG);
         handlerThread.start();
