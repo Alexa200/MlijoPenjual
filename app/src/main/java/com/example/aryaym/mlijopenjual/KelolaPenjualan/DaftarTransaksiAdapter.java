@@ -25,26 +25,26 @@ import java.util.List;
  * Created by AryaYM on 20/09/2017.
  */
 
-public class ListTransaksiAdapter extends RecyclerView.Adapter<ListTransaksiViewHolder> {
+public class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksiViewHolder> {
 
     private Activity activity;
     private List<TransaksiModel> listTransaksi;
     private DatabaseReference mDatabase;
 
-    public ListTransaksiAdapter(Activity activity, List<TransaksiModel> listTransaksi){
+    public DaftarTransaksiAdapter(Activity activity, List<TransaksiModel> listTransaksi){
         this.activity = activity;
         this.listTransaksi = listTransaksi;
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
-    public ListTransaksiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DaftarTransaksiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = View.inflate(activity, R.layout.item_transaksi, null);
-        return new ListTransaksiViewHolder(rootView);
+        return new DaftarTransaksiViewHolder(rootView);
     }
 
     @Override
-    public void onBindViewHolder(final ListTransaksiViewHolder holder, int position) {
+    public void onBindViewHolder(final DaftarTransaksiViewHolder holder, int position) {
         final TransaksiModel transaksiModel = listTransaksi.get(position);
 //        if (transaksiModel != null){
 //            try {

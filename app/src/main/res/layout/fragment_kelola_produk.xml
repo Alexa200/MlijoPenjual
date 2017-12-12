@@ -21,7 +21,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_add_black_24dp" />
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/white"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"

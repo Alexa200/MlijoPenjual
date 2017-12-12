@@ -50,7 +50,7 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
     private View rootView;
 
     private DatabaseReference mDatabase;
-    private List<PostRef> postRefs = new ArrayList<>();
+    private List<PostRefModel> postRefModels = new ArrayList<>();
     private KelolaProdukAdapter kelolaProdukAdapter;
     private MyLinearLayoutManager customLinearLayoutManager;
 
@@ -62,7 +62,7 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         ButterKnife.bind(this, rootView);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        kelolaProdukAdapter = new KelolaProdukAdapter(postRefs, getActivity());
+        kelolaProdukAdapter = new KelolaProdukAdapter(postRefModels, getActivity());
         customLinearLayoutManager = new MyLinearLayoutManager(getActivity());
         mRecycler.setLayoutManager(customLinearLayoutManager);
         mRecycler.setAdapter(kelolaProdukAdapter);
@@ -95,9 +95,9 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 try {
                                     if (dataSnapshot != null){
-                                        PostRef postRef = dataSnapshot.getValue(PostRef.class);
-                                        if (!postRefs.contains(postRef)) {
-                                            postRefs.add(postRef);
+                                        PostRefModel postRefModel = dataSnapshot.getValue(PostRefModel.class);
+                                        if (!postRefModels.contains(postRefModel)) {
+                                            postRefModels.add(postRefModel);
                                             kelolaProdukAdapter.notifyDataSetChanged();
                                         }
                                     }
@@ -115,9 +115,9 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
                                 try {
-                                    PostRef postRef = dataSnapshot.getValue(PostRef.class);
-                                    int indexMyPostInList = IndexProduk(postRef);
-                                    postRefs.remove(indexMyPostInList);
+                                    PostRefModel postRefModel = dataSnapshot.getValue(PostRefModel.class);
+                                    int indexMyPostInList = IndexProduk(postRefModel);
+                                    postRefModels.remove(indexMyPostInList);
                                     kelolaProdukAdapter.notifyDataSetChanged();
                                 } catch (Exception e) {
                                     ShowSnackbar.showSnack(getActivity(), getActivity().getResources().getString(R.string.msg_retry));
@@ -157,10 +157,10 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         return query;
     }
 
-    private int IndexProduk(PostRef postRef){
+    private int IndexProduk(PostRefModel postRefModel){
         int index = 0;
-        for (int i=0; i < postRefs.size(); i++){
-            if (postRefs.get(i).getIdProduk().equals(postRef.getIdProduk())){
+        for (int i = 0; i < postRefModels.size(); i++){
+            if (postRefModels.get(i).getIdProduk().equals(postRefModel.getIdProduk())){
                 index = i;
                 break;
             }

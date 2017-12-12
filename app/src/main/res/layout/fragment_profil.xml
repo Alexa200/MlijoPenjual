@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_light"
-    tools:context="com.example.aryaym.mlijopenjual.Profil.ProfilFragment">
+    tools:context="com.example.aryaym.mlijopenjual.Pengaturan.ProfilFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -100,15 +100,18 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/avatar"/>
+                        android:src="@drawable/ic_mail_outline_black_24dp"
+                        android:tint="@color/grey_percent_50"/>
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/avatar"/>
+                        android:src="@drawable/ic_phone_black_24dp"
+                        android:tint="@color/grey_percent_50"/>
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/avatar"/>
+                        android:src="@drawable/ic_home_black_24dp"
+                        android:tint="@color/grey_percent_50"/>
                 </LinearLayout>
 
                 <LinearLayout

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/activity_kelola_lokasi"
     android:background="@color/grey_light"
-    tools:context="com.example.aryaym.mlijopenjual.Profil.KelolaLokasiActivity"
+    tools:context="com.example.aryaym.mlijopenjual.Pengaturan.KelolaLokasiActivity"
     android:orientation="vertical">
 
     <LinearLayout

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aryaym.mlijopenjual.MainActivity;
-import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
+import com.example.aryaym.mlijopenjual.Pengaturan.PenjualModel;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;

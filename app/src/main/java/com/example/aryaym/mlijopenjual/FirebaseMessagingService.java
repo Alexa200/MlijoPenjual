@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.firebase.messaging.RemoteMessage;
 
 /**
@@ -23,7 +24,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String click_action = remoteMessage.getNotification().getClickAction();
 
-        String from_user_id = remoteMessage.getData().get("from_user_id");
+        String from_user_id = remoteMessage.getData().get("id_pengirim");
+        String avatar = remoteMessage.getData().get("userAvatar");
+        String nama = remoteMessage.getData().get("userName");
+        String konsumenId = remoteMessage.getData().get("id_konsumen");
+        String title = remoteMessage.getData().get("title_order");
+        String transaksi = remoteMessage.getData().get("transaksi_order");
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -33,7 +39,16 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
         Intent resultIntent = new Intent(click_action);
-        resultIntent.putExtra("user_id", from_user_id);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //obrolan
+        resultIntent.putExtra(Constants.UID, from_user_id);
+        resultIntent.putExtra(Constants.AVATAR, avatar);
+        resultIntent.putExtra(Constants.NAMA, nama);
+        //order
+        resultIntent.putExtra(Constants.TITLE, title);
+        resultIntent.putExtra(Constants.TRANSAKSI, transaksi);
+        //ulasan
 
 
         PendingIntent resultPendingIntent =

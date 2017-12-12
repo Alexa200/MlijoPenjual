@@ -10,7 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.aryaym.mlijopenjual.Profil.PenjualModel;
+import com.example.aryaym.mlijopenjual.Pengaturan.PenjualModel;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.google.firebase.database.DataSnapshot;

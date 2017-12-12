@@ -25,12 +25,12 @@ import java.util.List;
  */
 
 public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHolder>{
-    private List<PostRef> postRefs;
+    private List<PostRefModel> postRefModels;
     private Activity activity;
     private DatabaseReference mDatabase;
 
-    public KelolaProdukAdapter(List<PostRef> postRefs, Activity activity){
-        this.postRefs = postRefs;
+    public KelolaProdukAdapter(List<PostRefModel> postRefModels, Activity activity){
+        this.postRefModels = postRefModels;
         this.activity = activity;
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -43,8 +43,8 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
 
     @Override
     public void onBindViewHolder(final KelolaProdukViewHolder holder, int position) {
-        final PostRef postRef = postRefs.get(position);
-        mDatabase.child(Constants.PRODUK_REGULER).child((postRef.getIdKategori())).child((postRef.getIdProduk()))
+        final PostRefModel postRefModel = postRefModels.get(position);
+        mDatabase.child(Constants.PRODUK_REGULER).child((postRefModel.getIdKategori())).child((postRefModel.getIdProduk()))
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,14 +72,14 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
                                                         activity.startActivity(intent);
                                                         break;
                                                     case 1:
-//                                                        //final String produkId = postRef.getProdukId();
+//                                                        //final String produkId = postRefModel.getProdukId();
                                                         final AlertDialog.Builder delBuilder = new AlertDialog.Builder(view.getContext());
                                                         delBuilder.setMessage(R.string.msg_hapusProduk).setCancelable(false)
                                                                 .setPositiveButton(R.string.lbl_ya, new DialogInterface.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(DialogInterface dialog, int which) {
-                                                                        mDatabase.child(Constants.PRODUK_REGULER).child(postRef.getIdKategori()).child(postRef.getIdProduk()).removeValue();
-                                                                        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PRODUK).child(postRef.getIdProduk()).removeValue();
+                                                                        mDatabase.child(Constants.PRODUK_REGULER).child(postRefModel.getIdKategori()).child(postRefModel.getIdProduk()).removeValue();
+                                                                        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PRODUK).child(postRefModel.getIdProduk()).removeValue();
                                                                     }
                                                                 })
                                                                 .setNegativeButton(R.string.lbl_tidak, new DialogInterface.OnClickListener() {
@@ -90,7 +90,7 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
                                                                 });
                                                         delBuilder.create().show();
                                                         //Toast.makeText("delete",Toast.LENGTH_SHORT).show();
-                                                       // kelolaProduk.deleteProduk(String.valueOf(produkModel.getUid()), String.valueOf(postRef.getProdukId()),String.valueOf(postRef.getKategoriProduk()));
+                                                       // kelolaProduk.deleteProduk(String.valueOf(produkModel.getUid()), String.valueOf(postRefModel.getProdukId()),String.valueOf(postRefModel.getKategoriProduk()));
                                                         break;
                                                 }
                                             }
@@ -119,6 +119,6 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
 
     @Override
     public int getItemCount(){
-        return postRefs.size();
+        return postRefModels.size();
     }
 }

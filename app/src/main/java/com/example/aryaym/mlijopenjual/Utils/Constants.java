@@ -15,6 +15,7 @@ public class Constants {
     public static final String PENJUAL = "data_penjual";
     public static final String GEOFIRE = "geofire";
     public static final String KONSUMEN_MODEL = "konsumen_model";
+    public static final String NOTIFIKASI = "notifikasi";
     //PenjualModel
     public static final String AVATAR = "avatar";
     public static final String USER_AVATAR = "userAvatar";

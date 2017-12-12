@@ -1,4 +1,4 @@
-package com.example.aryaym.mlijopenjual.Profil;
+package com.example.aryaym.mlijopenjual.Pengaturan;
 
 import android.Manifest;
 import android.app.AlertDialog;

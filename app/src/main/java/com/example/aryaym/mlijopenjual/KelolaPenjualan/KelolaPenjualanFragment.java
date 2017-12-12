@@ -74,7 +74,7 @@ public class KelolaPenjualanFragment extends Fragment {
         pesananBaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(KelolaPenjualanFragment.this.getActivity(), ListTransaksiActivity.class);
+                Intent intent = new Intent(KelolaPenjualanFragment.this.getActivity(), DaftarTransaksiActivity.class);
                 intent.putExtra(Constants.TITLE, "Pesanan Baru");
                 intent.putExtra(Constants.TRANSAKSI, Constants.PENJUALAN_BARU);
                 startActivity(intent);
@@ -83,7 +83,7 @@ public class KelolaPenjualanFragment extends Fragment {
         statusPenjualan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(KelolaPenjualanFragment.this.getActivity(), ListTransaksiActivity.class);
+                Intent intent = new Intent(KelolaPenjualanFragment.this.getActivity(), DaftarTransaksiActivity.class);
                 intent.putExtra(Constants.TITLE, "Status Pesanan");
                 intent.putExtra(Constants.TRANSAKSI, Constants.STATUS_PENGIRIMAN);
                 startActivity(intent);
@@ -92,7 +92,7 @@ public class KelolaPenjualanFragment extends Fragment {
         riwayatTransaksi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(KelolaPenjualanFragment.this.getActivity(), ListTransaksiActivity.class);
+                Intent intent = new Intent(KelolaPenjualanFragment.this.getActivity(), DaftarTransaksiActivity.class);
                 intent.putExtra(Constants.TITLE, "Riwayat Transaksi");
                 intent.putExtra(Constants.TRANSAKSI, Constants.RIWAYAT_TRANSAKSI);
                 startActivity(intent);

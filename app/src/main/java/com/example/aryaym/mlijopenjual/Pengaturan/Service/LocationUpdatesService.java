@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.aryaym.mlijopenjual.Profil.Service;
+package com.example.aryaym.mlijopenjual.Pengaturan.Service;
 
 import android.app.ActivityManager;
 import android.app.Notification;
@@ -35,7 +35,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.example.aryaym.mlijopenjual.Profil.KelolaLokasiActivity;
+import com.example.aryaym.mlijopenjual.Pengaturan.KelolaLokasiActivity;
 import com.example.aryaym.mlijopenjual.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;

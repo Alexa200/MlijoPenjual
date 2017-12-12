@@ -11,12 +11,12 @@ import com.example.aryaym.mlijopenjual.R;
  * Created by AryaYM on 20/09/2017.
  */
 
-public class ListTransaksiViewHolder extends RecyclerView.ViewHolder {
+public class DaftarTransaksiViewHolder extends RecyclerView.ViewHolder {
 
     TextView txtTanggalTransaksi, txtNamaProduk, txtJmlProduk, txtAlamatKonsumen, txtStatusTransaksi, txtTanggalKirim, txtWaktuKirim;
     ImageView iconProduk;
 
-    public ListTransaksiViewHolder(View itemView){
+    public DaftarTransaksiViewHolder(View itemView){
         super(itemView);
 
         txtTanggalTransaksi = (TextView) itemView.findViewById(R.id.tanggal_transaksi);

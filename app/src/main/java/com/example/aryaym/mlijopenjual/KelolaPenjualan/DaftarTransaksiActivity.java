@@ -1,5 +1,6 @@
 package com.example.aryaym.mlijopenjual.KelolaPenjualan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListTransaksiActivity extends BaseActivity {
+public class DaftarTransaksiActivity extends BaseActivity {
 
     String title, jenisTransaksi;
     @BindView(R.id.recycler_list_transaksi)
@@ -36,7 +37,7 @@ public class ListTransaksiActivity extends BaseActivity {
 
     private DatabaseReference mDatabase;
     private List<TransaksiModel> transaksiList = new ArrayList<>();
-    private ListTransaksiAdapter listTransaksiAdapter;
+    private DaftarTransaksiAdapter daftarTransaksiAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +47,24 @@ public class ListTransaksiActivity extends BaseActivity {
         jenisTransaksi = getIntent().getStringExtra(Constants.TRANSAKSI);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        listTransaksiAdapter = new ListTransaksiAdapter(this, transaksiList);
+        daftarTransaksiAdapter = new DaftarTransaksiAdapter(this, transaksiList);
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getDataTransaksi();
 
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.setAdapter(listTransaksiAdapter);
+        mRecycler.setAdapter(daftarTransaksiAdapter);
+    }
+    @Override
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+
+        Bundle extras = intent.getExtras();
+        if (extras != null){
+            title = getIntent().getStringExtra(Constants.TITLE);
+            jenisTransaksi = getIntent().getStringExtra(Constants.TRANSAKSI);
+        }
     }
 
     private void showItemData() {
@@ -87,7 +98,7 @@ public class ListTransaksiActivity extends BaseActivity {
                                         TransaksiModel transaksiModel = dataSnapshot.getValue(TransaksiModel.class);
                                         if (!transaksiList.contains(transaksiModel)){
                                             transaksiList.add(transaksiModel);
-                                            listTransaksiAdapter.notifyDataSetChanged();
+                                            daftarTransaksiAdapter.notifyDataSetChanged();
                                         }
                                     }
                                     showItemData();

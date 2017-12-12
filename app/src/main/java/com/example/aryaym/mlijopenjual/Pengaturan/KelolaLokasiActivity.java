@@ -1,4 +1,4 @@
-package com.example.aryaym.mlijopenjual.Profil;
+package com.example.aryaym.mlijopenjual.Pengaturan;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -30,8 +30,8 @@ import android.widget.Toast;
 import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.BuildConfig;
-import com.example.aryaym.mlijopenjual.Profil.Service.LocationUpdatesService;
-import com.example.aryaym.mlijopenjual.Profil.Service.LocationUtils;
+import com.example.aryaym.mlijopenjual.Pengaturan.Service.LocationUpdatesService;
+import com.example.aryaym.mlijopenjual.Pengaturan.Service.LocationUtils;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.firebase.geofire.GeoFire;

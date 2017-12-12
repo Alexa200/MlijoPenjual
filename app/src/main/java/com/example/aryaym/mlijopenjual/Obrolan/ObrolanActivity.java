@@ -26,7 +26,6 @@ import android.widget.ImageView;
 
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.Base.InternetConnection;
-import com.example.aryaym.mlijopenjual.InformasiKonsumen.KonsumenModel;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.example.aryaym.mlijopenjual.Utils.EncodeImage;
@@ -66,9 +65,9 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
     private ObrolanAdapter obrolanAdapter;
     private List<ObrolanModel> obrolanList = new ArrayList<>();
     private String penerimaId = "";
-    private String deviceToken, namaPenerima;
+    private String deviceToken, namaPenerima, avatar;
     private DatabaseReference mDatabase;
-    private KonsumenModel konsumenModel;
+   // private KonsumenModel konsumenModel;
     private Uri mUri;
 
     private static final int REQUEST_CODE_READ_EXTERNAL_STORAGE = 1001;
@@ -98,12 +97,15 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mStorage = FirebaseStorage.getInstance().getReference();
-        konsumenModel = (KonsumenModel) getIntent().getSerializableExtra(Constants.KONSUMEN_MODEL);
-        penerimaId = konsumenModel.getUid();
-        deviceToken = konsumenModel.getDeviceToken();
+        //konsumenModel = (KonsumenModel) getIntent().getSerializableExtra(Constants.KONSUMEN_MODEL);
+//        penerimaId = konsumenModel.getUid();
+//        deviceToken = konsumenModel.getDeviceToken();
+        penerimaId = getIntent().getStringExtra(Constants.UID);
+        avatar = getIntent().getStringExtra(Constants.AVATAR);
+    //    deviceToken = getIntent().getStringExtra(Constants.DEVICE_TOKEN);
         //init
         presenter = new ObrolanPresenter(this);
-        obrolanAdapter = new ObrolanAdapter(this, obrolanList, konsumenModel.getDetailKonsumen().get(Constants.AVATAR).toString());
+        obrolanAdapter = new ObrolanAdapter(this, obrolanList, avatar);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerChat.setLayoutManager(linearLayoutManager);
         recyclerChat.setAdapter(obrolanAdapter);
@@ -204,6 +206,7 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         }else if (v == btnKirim){
             if (InternetConnection.getInstance().isOnline(ObrolanActivity.this)){
                 tambahDataObrolan();
+                buatNotifikasiKeKonsumen();
             }else {
                 ShowSnackbar.showSnack(ObrolanActivity.this, "Tidak ada koneksi");
             }
@@ -454,5 +457,10 @@ public class ObrolanActivity extends BaseActivity implements View.OnClickListene
         Map<String, Object> dataUpdate = new HashMap<>();
         dataUpdate.put(Constants.KONTEN, data);
         mDatabase.child(Constants.OBROLAN).child(currentId).child(partnerId).child(key).updateChildren(dataUpdate);
+    }
+
+    private void buatNotifikasiKeKonsumen() {
+        String key = mDatabase.child(Constants.NOTIFIKASI).child("konsumen").child(Constants.OBROLAN).child(penerimaId).push().getKey();
+        mDatabase.child(Constants.NOTIFIKASI).child("konsumen").child(Constants.OBROLAN).child(penerimaId).child(key).child("pengirimId").setValue(getUid());
     }
 }

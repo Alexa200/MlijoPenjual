@@ -61,7 +61,8 @@
                         android:layout_centerInParent="true"
                         android:enabled="false"
                         android:padding="10dp"
-                        android:src="@drawable/ic_add_circle_black_24dp" />
+                        android:src="@drawable/ic_add_circle_black_24dp"
+                        android:tint="@color/colorPrimary"/>
 
                     <EditText
                         android:id="@+id/input_pesan"
