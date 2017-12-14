@@ -52,22 +52,22 @@ public class DetailProdukActivity extends AppCompatActivity {
 
     private void initInfo(){
         if (InternetConnection.getInstance().isOnline(DetailProdukActivity.this)){
-            if (produkModel.getImgProduk().size() > 0){
+            if (produkModel.getGambarProduk().size() > 0){
                 imgProduk.setVisibility(View.GONE);
-                mViewImagePager = new AdapterImagePager(this, produkModel.getImgProduk());
+                mViewImagePager = new AdapterImagePager(this, produkModel.getGambarProduk());
                 viewPager.setAdapter(mViewImagePager);
             }else {
                 viewPager.setVisibility(View.GONE);
                 imgProduk.setImageResource(R.drawable.no_image);
             }
-            mViewImagePager = new AdapterImagePager(this, produkModel.getImgProduk());
+            mViewImagePager = new AdapterImagePager(this, produkModel.getGambarProduk());
             viewPager.setAdapter(mViewImagePager);
 
-            loadData();
+            loadDataProduk();
         }
     }
 
-    private void loadData() {
+    private void loadDataProduk() {
         try {
             setTitle(produkModel.getNamaProduk());
             namaProdukView.setText(produkModel.getNamaProduk());

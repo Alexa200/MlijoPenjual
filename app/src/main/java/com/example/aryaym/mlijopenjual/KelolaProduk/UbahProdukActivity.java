@@ -65,7 +65,7 @@ public class UbahProdukActivity extends BaseActivity implements View.OnClickList
         mDatabase = FirebaseDatabase.getInstance().getReference();
         //get intent data
         produkModel = (ProdukModel) getIntent().getSerializableExtra(Constants.PRODUK);
-        loadData();
+        loadDataProduk();
         spinnerData();
         btnSimpan.setOnClickListener(this);
         btnBatal.setOnClickListener(this);
@@ -103,7 +103,7 @@ public class UbahProdukActivity extends BaseActivity implements View.OnClickList
         });
     }
 
-    private void loadData() {
+    private void loadDataProduk() {
         try {
             mDatabase.child(Constants.PRODUK_REGULER).child(produkModel.getKategoriProduk()).child(produkModel.getIdProduk()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -131,7 +131,7 @@ public class UbahProdukActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    private void perbaruiProduk(){
+    private void perbaruiDataProduk(){
         namaProduk = inputNamaProduk.getText().toString();
         hargaProduk = Double.parseDouble(inputHargaProduk.getText().toString());
         satuanProduk = inputNominalSatuan.getText().toString() ;
@@ -156,7 +156,7 @@ public class UbahProdukActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v == btnSimpan){
-            perbaruiProduk();
+            perbaruiDataProduk();
             finish();
         }else if (v == btnBatal){
 

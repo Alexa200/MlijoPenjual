@@ -59,7 +59,7 @@ public class UploadPhotoThread extends AsyncTask<String, String, ArrayList<Strin
         try {
             //Storage Reference
             StorageReference mStorage = FirebaseStorage.getInstance().getReference();
-            mStorage = mStorage.child(Constants.IMAGES).child(idProduk);
+            mStorage = mStorage.child(Constants.GAMBARPRODUK).child(idProduk);
 
             // Create the file metadata
             StorageMetadata metadata = new StorageMetadata.Builder()

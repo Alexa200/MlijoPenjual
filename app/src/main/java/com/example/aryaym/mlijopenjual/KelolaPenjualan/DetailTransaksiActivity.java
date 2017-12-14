@@ -78,13 +78,12 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
     TextView txtSatuan;
     @BindView(R.id.input_total_harga)
     EditText inputTotalHarga;
-
-    private static final String TAG = "DetailTransaksiActivity";
     @BindView(R.id.btn_kirim_pesan)
     Button btnKirimPesan;
     @BindView(R.id.btn_lihat_peta)
     Button btnLihatPeta;
 
+    private static final String TAG = "DetailTransaksiActivity";
     private DatabaseReference mDatabase;
     private TransaksiModel transaksiModel;
 
@@ -109,7 +108,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
         initInfo();
         loadDataPesanan();
         loadDataProduk();
-        loadDataAlamat();
+        loadDataKonsumen();
 
     }
 
@@ -222,7 +221,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
                         txtSatuanDigit.setText(produkModel.getSatuanProduk());
                         txtSatuan.setText(produkModel.getNamaSatuan());
                         txtHargaProduk.setText("Rp." + rupiah().format(produkModel.getHargaProduk()));
-                        ImageLoader.getInstance().loadImageOther(DetailTransaksiActivity.this, produkModel.getImgProduk().get(0), imgProduk);
+                        ImageLoader.getInstance().loadImageOther(DetailTransaksiActivity.this, produkModel.getGambarProduk().get(0), imgProduk);
                     } catch (Exception e) {
 
                     }
@@ -236,7 +235,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void loadDataAlamat() {
+    private void loadDataKonsumen() {
         mDatabase.child(Constants.KONSUMEN).child(transaksiModel.getIdKonsumen()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -277,7 +276,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void terimaOrder() {
+    private void terimaPesanan() {
         mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.PENJUALAN_BARU).child(transaksiModel.getIdPemesanan()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -347,7 +346,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void perbaruiStatus() {
+    private void perbaruiStatusPesanan() {
         mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PENJUALAN).child(Constants.STATUS_PENGIRIMAN).child(transaksiModel.getIdPemesanan()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -431,10 +430,10 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v == btnTerimaPesanan) {
-            terimaOrder();
+            terimaPesanan();
             finish();
         } else if (v == btnPerbaruiStatus) {
-            perbaruiStatus();
+            perbaruiStatusPesanan();
             finish();
         } else if (v == btnTolakPesanan) {
             tolakPesanan();

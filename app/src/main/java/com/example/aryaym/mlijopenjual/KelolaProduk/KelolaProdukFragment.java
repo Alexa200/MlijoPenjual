@@ -67,7 +67,7 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         mRecycler.setLayoutManager(customLinearLayoutManager);
         mRecycler.setAdapter(kelolaProdukAdapter);
         fabNewProduk.setOnClickListener(this);
-        loadData();
+        loadDataProduk();
         return rootView;
     }
 
@@ -83,14 +83,14 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         imgNoResult.setVisibility(View.GONE);
     }
 
-    private void loadData() {
+    private void loadDataProduk() {
         try {
-            getAllPost(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
+            getProdukPenjual(BaseActivity.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()){
                         hideItemData();
-                        getAllPost(BaseActivity.getUid()).addChildEventListener(new ChildEventListener() {
+                        getProdukPenjual(BaseActivity.getUid()).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 try {
@@ -152,7 +152,7 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    public Query getAllPost(String uid) {
+    public Query getProdukPenjual(String uid) {
         Query query = mDatabase.child(Constants.PENJUAL).child(uid).child(Constants.PRODUK);
         return query;
     }

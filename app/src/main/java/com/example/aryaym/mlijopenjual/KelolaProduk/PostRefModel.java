@@ -14,15 +14,8 @@ public class PostRefModel implements Serializable {
         return idProduk;
     }
 
-    public void setIdProduk(String idProduk) {
-        this.idProduk = idProduk;
-    }
-
     public String getIdKategori() {
         return idKategori;
     }
 
-    public void setIdKategori(String idKategori) {
-        this.idKategori = idKategori;
-    }
 }

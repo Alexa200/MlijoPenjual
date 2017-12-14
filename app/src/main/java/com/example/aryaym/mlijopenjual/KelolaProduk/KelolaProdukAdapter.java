@@ -54,7 +54,7 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
                                 holder.namaProduk.setText(produkModel.getNamaProduk());
                                 holder.kategoriProduk.setText(produkModel.getKategoriProduk());
                                 holder.hargaProduk.setText("Rp."+BaseActivity.rupiah().format(produkModel.getHargaProduk()));
-                                ImageLoader.getInstance().loadImageOther(activity, produkModel.getImgProduk().get(0), holder.iconProduk);
+                                ImageLoader.getInstance().loadImageOther(activity, produkModel.getGambarProduk().get(0), holder.iconProduk);
 
                                 //onClick
                                 holder.menu.setOnClickListener(new View.OnClickListener() {

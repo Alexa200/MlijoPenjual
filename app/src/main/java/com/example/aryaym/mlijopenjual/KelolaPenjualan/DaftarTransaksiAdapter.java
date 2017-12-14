@@ -106,7 +106,7 @@ public class DaftarTransaksiAdapter extends RecyclerView.Adapter<DaftarTransaksi
                                 try {
                                     holder.txtNamaProduk.setText(produkModel.getNamaProduk());
                                     // holder.txtTanggalTransaksi.setText(transaksiModel.get);
-                                    ImageLoader.getInstance().loadImageAvatar(activity, produkModel.getImgProduk().get(0), holder.iconProduk);
+                                    ImageLoader.getInstance().loadImageAvatar(activity, produkModel.getGambarProduk().get(0), holder.iconProduk);
                                 }catch (Exception e){
 
                                 }

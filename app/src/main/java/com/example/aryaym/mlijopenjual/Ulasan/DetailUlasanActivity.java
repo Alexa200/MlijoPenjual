@@ -86,8 +86,8 @@ public class DetailUlasanActivity extends BaseActivity {
                 if (dataSnapshot != null) {
                     ProdukModel produkModel = dataSnapshot.getValue(ProdukModel.class);
                     txtNamaProduk.setText(produkModel.getNamaProduk());
-                    if (produkModel.getImgProduk() != null){
-                        ImageLoader.getInstance().loadImageOther(DetailUlasanActivity.this, produkModel.getImgProduk().get(0), imgProduk);
+                    if (produkModel.getGambarProduk() != null){
+                        ImageLoader.getInstance().loadImageOther(DetailUlasanActivity.this, produkModel.getGambarProduk().get(0), imgProduk);
                     }
                 }
             }

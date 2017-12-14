@@ -70,8 +70,8 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
     EditText inputDeskripsiProduk;
 
     private ArrayAdapter<String> spinnerKategoriAdapter, spinnerSatuanAdapter;
-    private String kategoriProduk, namaSatuan;
-    private String namaProduk,  satuanProduk, deskripsiProduk;
+
+    private String namaProduk, kategoriProduk, namaSatuan, satuanProduk, deskripsiProduk;
     private Double hargaProduk;
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
@@ -255,7 +255,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
         dataProduk.put(Constants.DIGITSATUAN, satuanProduk);
         dataProduk.put(Constants.NAMASATUAN, namaSatuan);
         dataProduk.put(Constants.ID_PRODUK,idProduk);
-        dataProduk.put(Constants.IMAGES, produk.getImgProduk());
+        dataProduk.put(Constants.GAMBARPRODUK, produk.getGambarProduk());
         dataProduk.put(Constants.DESKRIPSI, deskripsiProduk);
         mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).setValue(dataProduk);
         showProgessDialog();
@@ -264,7 +264,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onUploadPhotoSuccess(ArrayList<String> photoUrls) {
                 Map<String, Object> updateImage = new HashMap<>();
-                updateImage.put(Constants.IMAGES, photoUrls);
+                updateImage.put(Constants.GAMBARPRODUK, photoUrls);
                 mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).updateChildren(updateImage);
 
                 showProgessDialog();

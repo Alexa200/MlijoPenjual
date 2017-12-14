@@ -48,7 +48,8 @@ public class Constants {
     public static final String KATEGORI_LAIN = "kategoriLain";
     //Produk
     public static final String TITLE = "title";
-    public static final String IMAGES = "images";
+
+    public static final String GAMBARPRODUK = "gambarProduk";
     public static final String PRODUK = "produk";
     public static final String PRODUK_REGULER = "produk_reguler";
     public static final String PRODUK_KHUSUS = "produk_khusus";
@@ -97,6 +98,7 @@ public class Constants {
     public static final String PENGIRIM = "pengirim";
     public static final String TIMESTAMP = "timestamp";
     public static final String ID_PENERIMA = "idPenerima";
+    public static final String IMAGES = "images";
     //Informasi Konsumen
     public static final String DETAIL_KONSUMEN = "detailKonsumen";
     public static final String LONGITUDE = "longitude";
