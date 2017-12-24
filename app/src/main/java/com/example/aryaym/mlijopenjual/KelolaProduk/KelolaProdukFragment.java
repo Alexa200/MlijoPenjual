@@ -109,7 +109,19 @@ public class KelolaProdukFragment extends Fragment implements View.OnClickListen
 
                             @Override
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                try {
+                                    if (dataSnapshot != null){
+                                        PostRefModel postRefModel = dataSnapshot.getValue(PostRefModel.class);
+                                        if (!postRefModels.contains(postRefModel)) {
+                                            postRefModels.clear();
+                                            postRefModels.add(postRefModel);
+                                            kelolaProdukAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                    showItemData();
+                                }catch (Exception e){
 
+                                }
                             }
 
                             @Override

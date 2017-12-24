@@ -232,10 +232,10 @@ public class KelolaLokasiActivity extends BaseActivity
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialogFragment, int jam, int menit){
         if (dialogFragment.getTag().equals(FRAG_TAG_TIME_PICKER_OPEN)){
-            txtJamMulai.setText(String.format("%d : %d", jam, menit));
+            txtJamMulai.setText(String.format("%02d : %02d", jam, menit));
             timeOpenInMinute = jam * 60 + menit;
         }else {
-            txtJamSelesai.setText(String.format("%d : %d", jam, menit));
+            txtJamSelesai.setText(String.format("%02d : %02d", jam, menit));
             timeCloseInMinute = jam * 60 + menit;
         }
     }

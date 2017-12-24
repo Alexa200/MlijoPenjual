@@ -169,7 +169,8 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
     private void addPhoto() {
         Config config = new Config();
         config.setSelectionMin(1);
-        config.setSelectionLimit(10);
+        config.setSelectionLimit(4);
+        config.setToolbarTitleRes(R.string.chooseImage);
 
         ImagePickerActivity.setConfig(config);
 

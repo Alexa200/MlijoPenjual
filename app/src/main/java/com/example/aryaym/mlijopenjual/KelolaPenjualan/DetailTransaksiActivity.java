@@ -84,6 +84,10 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
     Button btnLihatPeta;
 
     private static final String TAG = "DetailTransaksiActivity";
+    @BindView(R.id.txt_tanggal_kirim)
+    TextView txtTanggalKirim;
+    @BindView(R.id.txt_waktu_kirim)
+    TextView txtWaktuKirim;
     private DatabaseReference mDatabase;
     private TransaksiModel transaksiModel;
 
@@ -143,6 +147,8 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
             statusTransaksi.setText(Constants.TERKIRIM);
             tombolStatus();
             sembunyikanInputBiaya();
+            btnPerbaruiStatus.setEnabled(false);
+            btnPerbaruiStatus.setText("Menunggu konfirmasi penerima");
             penerimaLayout.setVisibility(View.VISIBLE);
             inputPenerimaPesanan.setVisibility(View.GONE);
             txtPenerimaPesanan.setVisibility(View.VISIBLE);
@@ -205,6 +211,8 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
             jmlItemProduk.setText(String.valueOf(transaksiModel.getJumlahProduk()));
             txtBiayaKirim.setText("Rp." + rupiah().format(transaksiModel.getBiayaKirim()));
             txtPenerimaPesanan.setText(transaksiModel.getPenerima());
+            txtTanggalKirim.setText(transaksiModel.getTanggalKirim());
+            txtWaktuKirim.setText(transaksiModel.getWaktuKirim());
         } catch (Exception e) {
 
         }
@@ -249,7 +257,7 @@ public class DetailTransaksiActivity extends BaseActivity implements View.OnClic
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(DetailTransaksiActivity.this, ObrolanActivity.class);
-                           // intent.putExtra(Constants.KONSUMEN_MODEL, konsumenModel);
+                            // intent.putExtra(Constants.KONSUMEN_MODEL, konsumenModel);
                             intent.putExtra(Constants.UID, konsumenModel.getUid());
                             intent.putExtra(Constants.AVATAR, konsumenModel.getDetailKonsumen().get(Constants.AVATAR).toString());
                             intent.putExtra(Constants.NAMA, konsumenModel.getDetailKonsumen().get(Constants.NAMA).toString());

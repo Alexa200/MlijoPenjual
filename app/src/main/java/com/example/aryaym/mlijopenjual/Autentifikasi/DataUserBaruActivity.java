@@ -62,10 +62,10 @@ public class DataUserBaruActivity extends BaseActivity implements View.OnClickLi
 
     private boolean cekFillData(){
         boolean result = true;
-        if (TextUtils.isEmpty(inputNik.getText()) || TextUtils.isEmpty(inputAlamat.getText()) || TextUtils.isEmpty(inputAlamat.getText()) ||
-                TextUtils.isEmpty(inputTelepon.getText())) {
+        if (TextUtils.isEmpty(inputNik.getText()) || TextUtils.getTrimmedLength(inputNik.getText()) != 16 || TextUtils.isEmpty(inputNamaLengkap.getText()) || TextUtils.isEmpty(inputAlamat.getText()) ||
+                TextUtils.isEmpty(inputTelepon.getText()) ||TextUtils.getTrimmedLength(inputTelepon.getText()) < 10) {
             result = false;
-            ShowAlertDialog.showAlert("Wajib diisi", this);
+            ShowAlertDialog.showAlert("Wajib diisi, mohon perhatikan input data Anda dengan benar !", this);
         }
         return result;
     }
@@ -83,6 +83,7 @@ public class DataUserBaruActivity extends BaseActivity implements View.OnClickLi
         Map<String, Object> detailPenjualData = new HashMap<>();
         detailPenjualData.put(Constants.NIK, NIK);
         detailPenjualData.put(Constants.NAMA, Nama);
+        detailPenjualData.put(Constants.AVATAR, "");
         detailPenjualData.put(Constants.ALAMAT, Alamat);
         detailPenjualData.put(Constants.TELPON, Telpon);
         mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.DETAIL_PENJUAL).setValue(detailPenjualData);

@@ -106,12 +106,18 @@ public class KelolaPenjualanFragment extends Fragment {
         mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PENJUALAN).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                long newOrder = dataSnapshot.child(Constants.PENJUALAN_BARU).getChildrenCount();
-                long statusOrder = dataSnapshot.child(Constants.STATUS_PENGIRIMAN).getChildrenCount();
-                long historyOrder = dataSnapshot.child(Constants.RIWAYAT_TRANSAKSI).getChildrenCount();
-                jmlPenjualanBaru.setText(Long.toString(newOrder));
-                jmlStatusPenjualan.setText(Long.toString(statusOrder));
-                jmlRiwayatTransaksi.setText(Long.toString(historyOrder));
+                if (dataSnapshot != null){
+                    try {
+                        long newOrder = dataSnapshot.child(Constants.PENJUALAN_BARU).getChildrenCount();
+                        long statusOrder = dataSnapshot.child(Constants.STATUS_PENGIRIMAN).getChildrenCount();
+                        long historyOrder = dataSnapshot.child(Constants.RIWAYAT_TRANSAKSI).getChildrenCount();
+                        jmlPenjualanBaru.setText(Long.toString(newOrder));
+                        jmlStatusPenjualan.setText(Long.toString(statusOrder));
+                        jmlRiwayatTransaksi.setText(Long.toString(historyOrder));
+                    }catch (Exception e){
+
+                    }
+                }
             }
 
             @Override

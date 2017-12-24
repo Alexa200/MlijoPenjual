@@ -14,6 +14,18 @@
         android:layout_above="@+id/btn_submit"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/md_light_green_A700"
+            android:gravity="center"
+            android:text="Lengkapi Data Diri Anda"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/Color_Black"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +39,9 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="0.1"
-                android:src="@drawable/ic_person_black_24dp"/>
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_person_black_24dp"
+                android:tint="@color/grey_percent_55"/>
             <EditText
                 android:id="@+id/input_nik"
                 android:layout_width="0dp"
@@ -59,7 +73,9 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="0.1"
-                android:src="@drawable/ic_person_black_24dp"/>
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_person_black_24dp"
+                android:tint="@color/grey_percent_55"/>
             <EditText
                 android:id="@+id/input_nama_lengkap"
                 android:layout_width="0dp"
@@ -90,7 +106,9 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="0.1"
-                android:src="@drawable/ic_home_black_24dp"/>
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_home_black_24dp"
+                android:tint="@color/grey_percent_55"/>
             <EditText
                 android:id="@+id/input_alamat"
                 android:layout_width="0dp"
@@ -123,7 +141,9 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="0.1"
-                android:src="@drawable/ic_contact_phone_black_24dp"/>
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_contact_phone_black_24dp"
+                android:tint="@color/grey_percent_55"/>
             <EditText
                 android:id="@+id/input_telepon"
                 android:layout_width="0dp"

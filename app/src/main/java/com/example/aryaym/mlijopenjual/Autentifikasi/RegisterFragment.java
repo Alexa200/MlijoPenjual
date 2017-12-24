@@ -101,7 +101,6 @@ public class RegisterFragment extends Fragment {
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child(Constants.PENJUAL);
                             DatabaseReference currentUserDB = mDatabase.child(auth.getCurrentUser().getUid());
                             currentUserDB.child(Constants.EMAIL).setValue(email);
-                            currentUserDB.child(Constants.UID).setValue(getUid());
                             currentUserDB.child(Constants.DEVICE_TOKEN).setValue(getToken());
                             startActivity(new Intent(RegisterFragment.this.getActivity(), DataUserBaruActivity.class));
                             getActivity().finish();

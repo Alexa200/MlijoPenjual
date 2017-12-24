@@ -1,9 +1,9 @@
 <resources>
     <!-- Apps -->
     <string name="notification">Pemberitahuan</string>
-    <string name="chooseImageOrTakePicture">Choose a photo from the gallery or take a photo</string>
-    <string name="chooseImage">Select photo</string>
-    <string name="takePicture">Take a photo</string>
+    <string name="chooseImageOrTakePicture">Pilih foto dari gallery atau ambil foto baru</string>
+    <string name="chooseImage">Pilih Foto</string>
+    <string name="takePicture">Ambil Foto Baru</string>
     <string name="msg_simpan_img_error">simpan gambar error</string>
     <string name="msg_gambar_tersimpan">gambar tersimpan</string>
     <!-- Title -->
@@ -18,7 +18,7 @@
     <string name="title_activity_kelola_profil">Pengaturan Profil</string>
     <string name="title_activity_kelola_lokasi">Kelola Lokasi Berjualan</string>
     <string name="title_activity_detail_transaksi">Detail Transaksi</string>
-    <string name="title_activity_ulasan">Ulasan Konsumen</string>
+    <string name="title_activity_ulasan">Daftar Ulasan</string>
     <string name="title_activity_profil">Profil</string>
     <!-- Hint -->
     <string name="hint_pengaturan">  Pengaturan  </string>
