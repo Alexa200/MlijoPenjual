@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
@@ -38,25 +39,27 @@ public class DaftarObrolanFragment extends Fragment {
     private List<String> listUid;
     private DaftarObrolanAdapter daftarObrolanAdapter;
     private ProgressBar progressBar;
+    private ImageView noMessageResult;
     private DatabaseReference mDatabase;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_daftar_obrolan, container, false);
         getActivity().setTitle(R.string.title_activity_obrolan);
         mRecycler = (RecyclerView) view.findViewById(R.id.recycler_chat);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+        noMessageResult = (ImageView) view.findViewById(R.id.img_no_message);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         listUid = new ArrayList<>();
         daftarObrolanAdapter = new DaftarObrolanAdapter(getActivity(), listUid);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            if (InternetConnection.getInstance().isOnline(getActivity())){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if (InternetConnection.getInstance().isOnline(getActivity())) {
                 loadDataDaftarObrolan();
-            }else {
+            } else {
                 progressBar.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             ShowAlertDialog.showAlert(getActivity().getResources().getString(R.string.msg_retry), getActivity());
             progressBar.setVisibility(View.GONE);
             mRecycler.setVisibility(View.VISIBLE);
@@ -69,36 +72,38 @@ public class DaftarObrolanFragment extends Fragment {
     private void showItemData() {
         progressBar.setVisibility(View.GONE);
         mRecycler.setVisibility(View.VISIBLE);
+        noMessageResult.setVisibility(View.GONE);
     }
 
     private void hideItemData() {
         progressBar.setVisibility(View.VISIBLE);
         mRecycler.setVisibility(View.GONE);
+        noMessageResult.setVisibility(View.GONE);
     }
 
-    private Query getSemueObrolan(String currentId){
+    private Query getSemueObrolan(String currentId) {
         return mDatabase.child(Constants.PENJUAL).child(currentId).child(Constants.OBROLAN).orderByChild(Constants.TIMESTAMP);
     }
 
-    private void loadDataDaftarObrolan(){
+    private void loadDataDaftarObrolan() {
         try {
             getSemueObrolan(BaseActivity.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()){
+                    if (dataSnapshot.exists()) {
                         hideItemData();
                         getSemueObrolan(BaseActivity.getUid()).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 try {
-                                    if (dataSnapshot != null){
-                                        if (!listUid.contains(dataSnapshot.getKey())){
+                                    if (dataSnapshot != null) {
+                                        if (!listUid.contains(dataSnapshot.getKey())) {
                                             listUid.add(dataSnapshot.getKey());
                                             daftarObrolanAdapter.notifyDataSetChanged();
                                         }
                                     }
                                     showItemData();
-                                }catch (Exception e){
+                                } catch (Exception e) {
 
                                 }
                             }
@@ -123,6 +128,10 @@ public class DaftarObrolanFragment extends Fragment {
 
                             }
                         });
+                    }else {
+                        noMessageResult.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
+                        mRecycler.setVisibility(View.GONE);
                     }
                 }
 
@@ -131,8 +140,8 @@ public class DaftarObrolanFragment extends Fragment {
 
                 }
             });
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            noMessageResult.setVisibility(View.VISIBLE);
         }
     }
 }

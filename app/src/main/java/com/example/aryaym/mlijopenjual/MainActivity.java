@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.aryaym.mlijopenjual.Autentifikasi.AutentifikasiTeleponActivity;
+import com.example.aryaym.mlijopenjual.Bantuan.BantuanFragment;
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.Base.DeviceToken;
 import com.example.aryaym.mlijopenjual.Base.ImageLoader;
@@ -241,6 +242,9 @@ private NavigationView navigationView;
                 transaction.replace(R.id.main_fragment_container, pengaturanFragment).commit();
                 break;
             case R.id.bantuan:
+                BantuanFragment bantuanFragment = new BantuanFragment();
+                transaction.addToBackStack(BantuanFragment.class.getName());
+                transaction.replace(R.id.main_fragment_container, bantuanFragment).commit();
                 break;
             case R.id.signout:
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
