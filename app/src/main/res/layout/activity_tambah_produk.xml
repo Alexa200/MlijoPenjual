@@ -108,7 +108,6 @@
                             android:src="@drawable/ic_upload_image"/>
                     </LinearLayout>
                 </HorizontalScrollView>
-
             </LinearLayout>
 
             <LinearLayout
@@ -166,8 +165,8 @@
                             android:paddingRight="5dp"
                             android:layout_weight="3"
                             android:gravity="center_vertical"
-                            android:inputType="numberDecimal"
-                            android:hint="Input Harga Produk"/>
+                            android:inputType="number"
+                            android:hint="0"/>
 
                     </LinearLayout>
 
@@ -190,7 +189,8 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:layout_weight="1.5"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:hint="0"/>
                         <Spinner
                             android:id="@+id/nama_satuan"
                             android:layout_width="0dp"

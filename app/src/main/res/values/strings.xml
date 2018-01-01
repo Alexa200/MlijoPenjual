@@ -32,9 +32,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- Pesan -->
     <string name="msg_retry">Coba lagi</string>
-    <string name="msg_noInternet">Anda tidak tersambung internet</string>
+    <string name="msg_noInternet">Anda tidak tersambung internet, silahkan cek kembali koneksi anda</string>
     <string name="msg_loading">loading...</string>
-    <string name="msg_error">Error</string>
+    <string name="msg_error">Terjadi kesalahan, silahkan coba kembali</string>
     <string name="msg_confirmLogOut">Apakah anda yakin akan logout?</string>
     <string name="msg_keluarAplikasi">Apakah anda ingin keluar aplikasi?</string>
     <string name="msg_tidak_boleh_kosong">Anda harus mengisi Form yang tersedia !</string>

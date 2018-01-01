@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -24,11 +25,13 @@ import android.widget.Spinner;
 
 import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.Base.ImageLoader;
+import com.example.aryaym.mlijopenjual.Base.InternetConnection;
 import com.example.aryaym.mlijopenjual.KelolaProduk.service.UploadPhotoThread;
 import com.example.aryaym.mlijopenjual.KelolaProduk.service.UploadPhotoThreadListener;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
 import com.example.aryaym.mlijopenjual.Utils.ShowAlertDialog;
+import com.example.aryaym.mlijopenjual.Utils.ShowSnackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.gun0912.tedpicker.Config;
@@ -68,11 +71,13 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
     Button btnBatal;
     @BindView(R.id.deskripsiProduk)
     EditText inputDeskripsiProduk;
+    @BindView(R.id.activity)
+    LinearLayout activity;
 
     private ArrayAdapter<String> spinnerKategoriAdapter, spinnerSatuanAdapter;
 
     private String namaProduk, kategoriProduk, namaSatuan, satuanProduk, deskripsiProduk;
-    private Double hargaProduk;
+    private Double hargaProduk, hargaDouble;
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
     // [END declare_database_ref
@@ -101,10 +106,19 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
         btnUpload.setOnClickListener(this);
         btnSimpan.setOnClickListener(this);
 
+        handleDataType();
         handleSpinner();
     }
 
-    private void handleSpinner(){
+    public void handleDataType() {
+        try {
+            hargaDouble = Double.parseDouble(inputHargaProduk.getText().toString());
+        } catch (NumberFormatException e) {
+            hargaDouble = Double.valueOf(0);
+        }
+    }
+
+    private void handleSpinner() {
         //spinnerKategori
         spinnerKategoriAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.arrKategori));
@@ -223,62 +237,86 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
         );
     }
 
-    private boolean cekFillData(){
-        boolean result = true;
-        if (TextUtils.isEmpty(inputNamaProduk.getText()) || TextUtils.isEmpty(inputHargaProduk.getText())|| TextUtils.isEmpty(inputNominalSatuan.getText())||
-                TextUtils.isEmpty(inputDeskripsiProduk.getText())){
-            result = false;
-            ShowAlertDialog.showAlert("Anda harus mengisi Form yang tersedia !", this);
+    private boolean cekKolomIsian() {
+        boolean hasil;
+        if (TextUtils.isEmpty(inputNamaProduk.getText()) || TextUtils.isEmpty(inputHargaProduk.getText()) || TextUtils.isEmpty(inputNominalSatuan.getText()) ||
+                TextUtils.isEmpty(inputDeskripsiProduk.getText())) {
+            hasil = false;
+        } else {
+            hasil = true;
         }
-        return result;
+        return hasil;
     }
 
-    private void submitPost(){
-      //  final ProdukModel produkModel = new ProdukModel();
+    private void simpanProduk() {
         namaProduk = inputNamaProduk.getText().toString();
-        hargaProduk = Double.parseDouble(inputHargaProduk.getText().toString());
-        satuanProduk = inputNominalSatuan.getText().toString() ;
+        hargaProduk = hargaDouble;
+        satuanProduk = inputNominalSatuan.getText().toString();
         deskripsiProduk = inputDeskripsiProduk.getText().toString();
 
-        buatProdukBaru(namaProduk, hargaProduk, satuanProduk, deskripsiProduk);
+        if (cekKolomIsian() == true) {
+            buatProdukBaru(namaProduk, hargaProduk, satuanProduk, deskripsiProduk);
+        } else {
+            ShowAlertDialog.showAlert("Anda harus mengisi semua Form yang tersedia !", this);
+        }
     }
 
-    private void buatProdukBaru(String namaProduk, Double hargaProduk, String satuanProduk, String deskripsiProduk){
-        long waktuDibuat = new Date().getTime();
-        String pushId = mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).push().getKey();
-        final String idProduk = pushId;
-        HashMap<String, Object> dataProduk = new HashMap<>();
-        dataProduk.put(Constants.ID_PENJUAL, getUid());
-        dataProduk.put(Constants.WAKTU_DIBUAT, waktuDibuat);
-        dataProduk.put(Constants.NAMAPRODUK, namaProduk);
-        dataProduk.put(Constants.ID_KATEGORI, kategoriProduk);
-        dataProduk.put(Constants.HARGAPRODUK, hargaProduk);
-        dataProduk.put(Constants.DIGITSATUAN, satuanProduk);
-        dataProduk.put(Constants.NAMASATUAN, namaSatuan);
-        dataProduk.put(Constants.ID_PRODUK,idProduk);
-        dataProduk.put(Constants.GAMBARPRODUK, produk.getGambarProduk());
-        dataProduk.put(Constants.DESKRIPSI, deskripsiProduk);
-        mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).setValue(dataProduk);
-        showProgessDialog();
-
-        UploadPhotoThreadListener uploadPhotoThreadListener = new UploadPhotoThreadListener() {
-            @Override
-            public void onUploadPhotoSuccess(ArrayList<String> photoUrls) {
-                Map<String, Object> updateImage = new HashMap<>();
-                updateImage.put(Constants.GAMBARPRODUK, photoUrls);
-                mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).updateChildren(updateImage);
-
+    private void buatProdukBaru(String namaProduk, Double hargaProduk, String satuanProduk, String deskripsiProduk) {
+        if (InternetConnection.getInstance().isOnline(TambahProdukActivity.this)) {
+            try {
+                long waktuDibuat = new Date().getTime();
+                String pushId = mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).push().getKey();
+                final String idProduk = pushId;
+                HashMap<String, Object> dataProduk = new HashMap<>();
+                dataProduk.put(Constants.ID_PENJUAL, getUid());
+                dataProduk.put(Constants.WAKTU_DIBUAT, waktuDibuat);
+                dataProduk.put(Constants.NAMAPRODUK, namaProduk);
+                dataProduk.put(Constants.ID_KATEGORI, kategoriProduk);
+                dataProduk.put(Constants.HARGAPRODUK, hargaProduk);
+                dataProduk.put(Constants.DIGITSATUAN, satuanProduk);
+                dataProduk.put(Constants.NAMASATUAN, namaSatuan);
+                dataProduk.put(Constants.ID_PRODUK, idProduk);
+                dataProduk.put(Constants.GAMBARPRODUK, produk.getGambarProduk());
+                dataProduk.put(Constants.DESKRIPSI, deskripsiProduk);
+                mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).setValue(dataProduk);
                 showProgessDialog();
-                HashMap<String, Object> data = new HashMap<>();
-                data.put(Constants.ID_KATEGORI, kategoriProduk);
-                data.put(Constants.ID_PRODUK, idProduk);
-                mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PRODUK).child(idProduk).setValue(data);
-            }
-        };
-        new UploadPhotoThread(idProduk, listImage, uploadPhotoThreadListener).execute();
 
-        hideProgressDialog();
-        finish();
+                if (listImage.size() == 0) {
+                    ShowAlertDialog.showAlert("Anda harus memilih gambar produk minimal (1)!", this);
+                } else {
+
+                    UploadPhotoThreadListener uploadPhotoThreadListener = new UploadPhotoThreadListener() {
+                        @Override
+                        public void onUploadPhotoSuccess(ArrayList<String> photoUrls) {
+                            Map<String, Object> updateImage = new HashMap<>();
+                            updateImage.put(Constants.GAMBARPRODUK, photoUrls);
+                            mDatabase.child(Constants.PRODUK_REGULER).child(kategoriProduk).child(idProduk).updateChildren(updateImage);
+
+                            showProgessDialog();
+                            HashMap<String, Object> data = new HashMap<>();
+                            data.put(Constants.ID_KATEGORI, kategoriProduk);
+                            data.put(Constants.ID_PRODUK, idProduk);
+                            mDatabase.child(Constants.PENJUAL).child(getUid()).child(Constants.PRODUK).child(idProduk).setValue(data);
+                        }
+                    };
+                    new UploadPhotoThread(idProduk, listImage, uploadPhotoThreadListener).execute();
+
+                    hideProgressDialog();
+                    finish();
+                }
+            } catch (Exception e) {
+                ShowSnackbar.showSnack(this, getResources().getString(R.string.msg_error));
+            }
+        } else {
+            final Snackbar snackbar = Snackbar.make(activity, getResources().getString(R.string.msg_noInternet), Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setAction(getResources().getString(R.string.ok), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snackbar.dismiss();
+                        }
+                    });
+            snackbar.show();
+        }
     }
 
     // [END write_fan_out]
@@ -289,10 +327,7 @@ public class TambahProdukActivity extends BaseActivity implements View.OnClickLi
                 addPhoto();
             }
         } else if (view == btnSimpan) {
-            if (cekFillData()){
-                showProgessDialog();
-                submitPost();
-            }
+            simpanProduk();
         }
     }
 }

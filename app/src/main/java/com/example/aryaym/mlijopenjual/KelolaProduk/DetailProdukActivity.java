@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.aryaym.mlijopenjual.Base.BaseActivity;
 import com.example.aryaym.mlijopenjual.Base.InternetConnection;
 import com.example.aryaym.mlijopenjual.R;
 import com.example.aryaym.mlijopenjual.Utils.Constants;
@@ -72,7 +73,7 @@ public class DetailProdukActivity extends AppCompatActivity {
             setTitle(produkModel.getNamaProduk());
             namaProdukView.setText(produkModel.getNamaProduk());
             kategoriProdukView.setText(produkModel.getKategoriProduk());
-            hargaProdukView.setText(produkModel.getHargaProduk().toString());
+            hargaProdukView.setText("Rp."+ BaseActivity.rupiah().format(produkModel.getHargaProduk()));
             satuanProdukView.setText(produkModel.getSatuanProduk() + " " + produkModel.getNamaSatuan());
             detailProdukView.setText(produkModel.getDeskripsiProduk());
         }catch (Exception e){

@@ -51,61 +51,65 @@ public class KelolaProdukAdapter extends RecyclerView.Adapter<KelolaProdukViewHo
                         if (dataSnapshot != null){
                             final ProdukModel produkModel = dataSnapshot.getValue(ProdukModel.class);
                             if(produkModel != null){
-                                holder.namaProduk.setText(produkModel.getNamaProduk());
-                                holder.kategoriProduk.setText(produkModel.getKategoriProduk());
-                                holder.hargaProduk.setText("Rp."+BaseActivity.rupiah().format(produkModel.getHargaProduk()));
-                                ImageLoader.getInstance().loadImageOther(activity, produkModel.getGambarProduk().get(0), holder.iconProduk);
+                                try {
+                                    holder.namaProduk.setText(produkModel.getNamaProduk());
+                                    holder.kategoriProduk.setText(produkModel.getKategoriProduk());
+                                    holder.hargaProduk.setText("Rp."+BaseActivity.rupiah().format(produkModel.getHargaProduk()));
+                                    ImageLoader.getInstance().loadImageOther(activity, produkModel.getGambarProduk().get(0), holder.iconProduk);
 
-                                //onClick
-                                holder.menu.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(final View view) {
-                                        final CharSequence[] dialogitem = {"edit", "hapus"};
-                                        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                        builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                switch (which){
-                                                    case 0:
-                                                        Intent intent = new Intent(activity, UbahProdukActivity.class);
-                                                        intent.putExtra(Constants.PRODUK, produkModel);
-                                                        activity.startActivity(intent);
-                                                        break;
-                                                    case 1:
+                                    //onClick
+                                    holder.menu.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(final View view) {
+                                            final CharSequence[] dialogitem = {"edit", "hapus"};
+                                            final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                                            builder.setItems(dialogitem, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    switch (which){
+                                                        case 0:
+                                                            Intent intent = new Intent(activity, UbahProdukActivity.class);
+                                                            intent.putExtra(Constants.PRODUK, produkModel);
+                                                            activity.startActivity(intent);
+                                                            break;
+                                                        case 1:
 //                                                        //final String produkId = postRefModel.getProdukId();
-                                                        final AlertDialog.Builder delBuilder = new AlertDialog.Builder(view.getContext());
-                                                        delBuilder.setMessage(R.string.msg_hapusProduk).setCancelable(false)
-                                                                .setPositiveButton(R.string.lbl_ya, new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialog, int which) {
-                                                                        mDatabase.child(Constants.PRODUK_REGULER).child(postRefModel.getIdKategori()).child(postRefModel.getIdProduk()).removeValue();
-                                                                        mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PRODUK).child(postRefModel.getIdProduk()).removeValue();
-                                                                    }
-                                                                })
-                                                                .setNegativeButton(R.string.lbl_tidak, new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                            final AlertDialog.Builder delBuilder = new AlertDialog.Builder(view.getContext());
+                                                            delBuilder.setMessage(R.string.msg_hapusProduk).setCancelable(false)
+                                                                    .setPositiveButton(R.string.lbl_ya, new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
+                                                                            mDatabase.child(Constants.PRODUK_REGULER).child(postRefModel.getIdKategori()).child(postRefModel.getIdProduk()).removeValue();
+                                                                            mDatabase.child(Constants.PENJUAL).child(BaseActivity.getUid()).child(Constants.PRODUK).child(postRefModel.getIdProduk()).removeValue();
+                                                                        }
+                                                                    })
+                                                                    .setNegativeButton(R.string.lbl_tidak, new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialog, int which) {
 
-                                                                    }
-                                                                });
-                                                        delBuilder.create().show();
-                                                        //Toast.makeText("delete",Toast.LENGTH_SHORT).show();
-                                                       // kelolaProduk.deleteProduk(String.valueOf(produkModel.getUid()), String.valueOf(postRefModel.getProdukId()),String.valueOf(postRefModel.getKategoriProduk()));
-                                                        break;
+                                                                        }
+                                                                    });
+                                                            delBuilder.create().show();
+                                                            //Toast.makeText("delete",Toast.LENGTH_SHORT).show();
+                                                            // kelolaProduk.deleteProduk(String.valueOf(produkModel.getUid()), String.valueOf(postRefModel.getProdukId()),String.valueOf(postRefModel.getKategoriProduk()));
+                                                            break;
+                                                    }
                                                 }
-                                            }
-                                        });
-                                        builder.create().show();
-                                    }
-                                });
-                                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Intent intent = new Intent(activity, DetailProdukActivity.class);
-                                        intent.putExtra(Constants.PRODUK, produkModel);
-                                        activity.startActivity(intent);
-                                    }
-                                });
+                                            });
+                                            builder.create().show();
+                                        }
+                                    });
+                                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(activity, DetailProdukActivity.class);
+                                            intent.putExtra(Constants.PRODUK, produkModel);
+                                            activity.startActivity(intent);
+                                        }
+                                    });
+                                }catch (Exception e){
+
+                                }
                             }
                         }
                     }
